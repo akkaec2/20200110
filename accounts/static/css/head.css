@@ -1,0 +1,20 @@
+body{
+  display: flex;
+  flex-direction: column;
+}
+.head{
+  height: 70px;
+  align-items: center;
+  background-color: #D7EEFF;
+  /* color: #fff; */
+}
+.login_name {
+  font-size: 1.5em;
+  text-align: left;  /* 文章を左寄せする(※) */
+  float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
+  align-items: center;
+}
+.logout {
+  text-align: right;/*文章を右寄せする */
+  float: right;   
+}

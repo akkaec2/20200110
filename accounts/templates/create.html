@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html> 
+<head>
+    <meta charset="UTF-8">
+    <title>アカウント作成</title>
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
+</head>
+<html lang="ja"> 
+  <body> 
+    <form method="POST" action="{% url 'create_account' %}"> {% csrf_token %} 
+      <div align="center">
+        <fieldset>
+          <h1>アカウント作成</h1>
+          <label>ユーザーID</label> 
+          {{ form.username }} <br>
+          <label>パスワード</label> 
+          {{ form.password1 }} <br>
+          <label>パスワード(確認)</label> 
+          {{ form.password2 }} <br>
+          <br><button type = "submit">登録</button> 
+        </fieldset>
+      </div>
+    </form> 
+  </body> 
+</html> 

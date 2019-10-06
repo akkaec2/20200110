@@ -1,0 +1,25 @@
+fieldset{
+  width:400px;
+  margin:0 auto;
+  margin-top:8px;
+  margin-bottom:2%;
+  transition:opacity 1s;
+  -webkit-transition:opacity 1s;
+
+}
+h1{
+  background:#004A3E;
+  padding:20px 0; /*PADDING TODOS OS LADOS DE 20PX*/
+  font-size:140%;
+  font-weight:400;
+  text-align:center;
+  color:#fff;
+}
+button[type="submit"]{
+  width:50%;
+  padding:2%;
+  font-size:100%;
+  -moz-border-radius: 5px; 
+  -webkit-border-radius: 5px; 
+  border-radius: 5px;  
+}

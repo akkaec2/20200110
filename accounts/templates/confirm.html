@@ -1,0 +1,52 @@
+
+<!DOCTYPE html> 
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>メイン操作画面</title>
+    <link rel="stylesheet" href="{% static 'css/operate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/head.css' %}">
+</head>
+<html lang="ja">      
+
+    <body>
+        <header class="head">
+            <a class = "login_name">Login:{{ user.username }} さん</a>
+            <a class = "logout" href="{% url 'logout' %}">ログアウト</a>
+        </header>
+        <main>
+            <div class="menu">
+                <br><li><a href = "{% url 'pail_num_detail' %}" target="_self">杭番号,杭明細紐づけ</a></li><br>
+                <li><a href = "{% url 'deli_info' %}" target="_self">出荷情報受信</a></li><br>
+                <li><a href = "{% url 'collation' %}" target="_self">杭照合</a></li><br>
+                <li><a href = "{% url 'casting' %}" target="_self">打設確認</a></li><br>
+                <li><a href = "{% url 'confirm' %}" target="_self">杭番号紐づけ確認</a></li><br>
+             </div>
+            <div class="main">
+                <p>確認</p><br>
+                <form action="{% url 'confirm' %}" method="post"> {% csrf_token %}
+                    <tabel border ="1">
+                        <thead>
+                            <tr>
+                                <th>杭番号</th>
+                                <th>杭詳細番号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key,value in pd.items %}
+                            <tr>
+                                <td>{{key}}</td>
+                                <td>{{value}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </tabel>
+                </form>
+                <br>          
+                <a href = "{% url 'main_operate' %}" target="_self">ホームへ戻る</a><br>
+            </div>
+        </main>
+    </body>
+        
+    
+</html> 

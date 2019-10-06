@@ -1,0 +1,43 @@
+
+<!DOCTYPE html> 
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>メイン操作画面</title>
+    <link rel="stylesheet" href="{% static 'css/operate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/head.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<html lang="ja">      
+
+    <body>
+        <header class="head">
+            <a class = "login_name">Login:{{ user.username }} さん</a>
+            <a class = "logout" href="{% url 'logout' %}">ログアウト</a>
+        </header>
+        <main>
+            <div class="menu">
+                <br><li><a href = "{% url 'pail_num_detail' %}" target="_self">杭番号,杭明細紐づけ</a></li><br>
+                <li><a href = "{% url 'deli_info' %}" target="_self">出荷情報受信</a></li><br>
+                <li><a href = "{% url 'collation' %}" target="_self">杭照合</a></li><br>
+                <li><a href = "{% url 'casting' %}" target="_self">打設確認</a></li><br>
+                <li><a href = "{% url 'confirm' %}" target="_self">杭番号紐づけ確認</a></li><br>
+             </div>
+            <div class="main">
+                <form action="{% url 'pail_num_detail' %}" method="post">
+                    {% csrf_token %}
+                    <p>杭番号杭詳細紐づけ</p>
+                    <label>{{form1.pail_num.label}}:{{form1.pail_num}}  </label>
+                    <br>
+                    <label>{{form1.pail_detail_num.label}}:{{form1.pail_detail_num}} </label>
+                    <br>
+                    {% csrf_token %}
+                    <br><button type = "submit">登録</button> <br><br>
+                </form>
+                <a href = "{% url 'main_operate' %}" target="_self">ホームへ戻る</a><br>
+            </div>
+        </main>
+    </body>
+        
+    
+</html> 

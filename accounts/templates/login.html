@@ -1,0 +1,31 @@
+
+<!DOCTYPE html> 
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>テストWebアプリ</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<html lang="ja"> 
+  <body>
+    <form method="POST" action="{% url 'login' %}"> {% csrf_token %} 
+      <div align="center">
+        <fieldset>
+          <h1>Login</h1>
+          {% if form.errors  %} 
+          <font color="red"><p>ユーザーID, パスワードが一致しません．</p> </font>
+          {% endif %}
+          <label>ユーザーID</label>
+          {{ form.username }} 
+          {{ form.username.errors }} 
+          <br><label>パスワード</label>
+          {{ form.password }} 
+          {{ form.password.errors }} 
+          <br><br><button type="submit" name="login">ログイン</button><br>
+          <br><a href="{% url 'create_account' %}">アカウント作成</a>  
+        </fieldset>
+      </div>
+    </form>
+  </body> 
+</html> 
+
