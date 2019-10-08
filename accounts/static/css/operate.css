@@ -2,21 +2,22 @@ body{
   display: flex;
   flex-direction: column;
 }
-.head{
+/* .head{
   /* height: 70px; */
-  text-align: center;
-  background-color: #D7EEFF;
+  /* text-align: center; */
+  /* background-color: #D7EEFF; */
   /* color: #fff; */
-}
-.login_name {
-  font-size: 1.5em;
-  text-align: left;  /* 文章を左寄せする(※) */
-  float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
-}
-.logout {
-  text-align: right;/*文章を右寄せする */
-  float: right;   
-}
+/* } */
+/* .login_name { */
+  /* font-size: 10.0em; */
+  /* text-align: left;  文章を左寄せする(※) */
+  /* float: left;     左端に寄せて、後続を右側へ回り込ませる */
+/* } */
+/* .logout { */
+  /* text-align: right;文章を右寄せする */
+  /* float: right;  */
+  /* font-size: 2.0em;   */
+/* } */
 main{
   min-height: 100vh;
   display: flex;
@@ -30,14 +31,16 @@ main{
 }
 
 .menu{
-  width: 200px;
+  width: 400px;
   /* text-align: center; */
   background-color: #EEFFFF;
   color: #333;
+  font-size: 2.0em;  
 }
-.pail{
+/* .pail{
   width: 200px;
-  /* text-align: center; */
   background-color: #EEFFFF;
   color: #333;
-}
+   text-align: center;
+ 
+} */

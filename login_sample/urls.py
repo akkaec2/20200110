@@ -28,16 +28,14 @@ from django.contrib.auth import login,logout
  
 urlpatterns = [ 
     url(r'^admin/', admin.site.urls), 
-    # url(r'^$', views.account_login, name='index'), #url(r'^$', views.index, name='index')から変更
     url(r'^create/$', views.create_account, name='create_account'), 
     url(r'^$', views.account_login, name='login'), #r'^login/$'から変更
     url(r'^operate$', views.main_operate, name='main_operate'),
     url(r'^$', views.account_login, name='logout'), #login画面に戻る
-    url(r'^deliinfo$', views.deli_info, name='deli_info'), #出荷情報画面表示
+    # url(r'^deliinfo$', views.deli_info, name='deli_info'), #出荷情報画面表示
     url(r'^collation$', views.collation, name='collation'), #杭照合画面表示
     url(r'^casting$', views.casting, name='casting'), #杭打設確認画面表示
     url(r'^pail_num_detail$', views.pail_num_detail, name='pail_num_detail'), #杭番号、杭明細紐づけ画面表示
-    url(r'^ok$', views.ok, name='ok'), #ok画面表示
-    url(r'^confirm$', views.confirm, name='confirm'), #確認画面表示
-    # url(r'^confirm$', views.p_dict, name='confirm'), #確認画面表示
+    # url(r'^ok$', views.ok, name='ok'), #ok画面表示
+    # url(r'^confirm$', views.confirm, name='confirm'), #確認画面表示
 ]

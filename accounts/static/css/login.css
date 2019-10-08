@@ -1,5 +1,5 @@
 fieldset{
-  width:400px;
+  width:500px;
   margin:0 auto;
   margin-top:8px;
   margin-bottom:2%;
@@ -22,4 +22,18 @@ button[type="submit"]{
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px; 
   border-radius: 5px;  
+  background-color: #00AA00;/* 背景色を緑色に指定 */
+  color: #333;/* 文字色を黒に指定 */
+  box-shadow: 2px 2px 3px 1px #666;
+  -moz-box-shadow: 2px 2px 3px 1px #666;
+  -webkit-box-shadow: 2px 2px 3px 1px #666;
+}
+
+label {
+  /* すべてのラベルを同じサイズにして、きちんと揃える */
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+  font-size:1.2em;
+  /* background: orange; */
 }
