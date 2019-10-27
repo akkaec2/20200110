@@ -22,8 +22,8 @@ button[type="submit"]{
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px; 
   border-radius: 5px;  
-  background-color: #00AA00;/* 背景色を緑色に指定 */
-  color: #333;/* 文字色を黒に指定 */
+  background-color: #008000;/* 背景色を緑色に指定 */
+  color: #fff;/* 文字色を黒に指定 */
   box-shadow: 2px 2px 3px 1px #666;
   -moz-box-shadow: 2px 2px 3px 1px #666;
   -webkit-box-shadow: 2px 2px 3px 1px #666;
@@ -32,8 +32,10 @@ button[type="submit"]{
 label {
   /* すべてのラベルを同じサイズにして、きちんと揃える */
   display: inline-block;
-  width: 200px;
+  width: 100px;
   text-align: right;
   font-size:1.2em;
   /* background: orange; */
 }
+
+

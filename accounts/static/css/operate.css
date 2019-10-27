@@ -19,7 +19,7 @@ body{
   /* font-size: 2.0em;   */
 /* } */
 main{
-  min-height: 100vh;
+  min-height: 1000vh;
   display: flex;
   margin-top: 5px;
 }
@@ -31,11 +31,11 @@ main{
 }
 
 .menu{
-  width: 400px;
+  width: 200px;
   /* text-align: center; */
   background-color: #EEFFFF;
   color: #333;
-  font-size: 2.0em;  
+  font-size: 1.2em;  
 }
 /* .pail{
   width: 200px;

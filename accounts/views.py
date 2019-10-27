@@ -7,6 +7,7 @@ from django.views.generic import CreateView, TemplateView
 from .forms import UserCreateForm, LoginForm, PailNumForm
 # from accounts.models import PailnumModel
 from django.http import HttpResponse
+# ,TablerowForm
 
 pdict = {0:0}
 
@@ -81,7 +82,8 @@ def deli_info(request):
 
 #ログイン後右側の画面（照合画面）
 def collation(request):
-    return render(request,'collation.html')
+    # f = TablerowForm(data = request.POST)
+    return render(request,'collation.html')#,{'form1':f}
 #ログイン後右側の画面（打設確認画面）
 def casting(request):
     return render(request,'casting.html')
@@ -92,11 +94,7 @@ def ok(request):
 
 #ログイン後右側の画面（確認画面）
 def confirm(request):
-    pd = p_dict
-    d = {
-        'pd':pd
-    }
-    return render(request,'confirm.html',d) 
+    return render(request,'confirm.html') 
 
 # class Pail_num_detail(CreateView):
 #     def post(self, request, *args, **kwargs):

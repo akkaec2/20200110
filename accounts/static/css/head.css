@@ -3,19 +3,22 @@ body{
   flex-direction: column;
 }
 .head{
-  height: 90px;
+  height: 80px;
   align-items: center;
   /* background-color: #D7EEFF; */
   background-color: #0000EE;
-  color: #fff;
+ 
 }
 .login_name {
-  font-size: 10.0em;
+  font-size: 40px;
   text-align: left;  /* 文章を左寄せする(※) */
   float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
   align-items: center;
+  color: #fff;
 }
 .logout {
   text-align: right;/*文章を右寄せする */
   float: right;   
+  font-size: 20px;
+  color:#fff;
 }

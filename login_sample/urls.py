@@ -37,5 +37,5 @@ urlpatterns = [
     url(r'^casting$', views.casting, name='casting'), #杭打設確認画面表示
     url(r'^pail_num_detail$', views.pail_num_detail, name='pail_num_detail'), #杭番号、杭明細紐づけ画面表示
     # url(r'^ok$', views.ok, name='ok'), #ok画面表示
-    # url(r'^confirm$', views.confirm, name='confirm'), #確認画面表示
+    url(r'^confirm$', views.confirm, name='confirm'), #受入検査確認画面表示
 ]

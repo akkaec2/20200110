@@ -36,3 +36,10 @@ class PailNumForm(forms.Form):
         required = True,
         widget=forms.TextInput()
     )
+
+# class TablerowForm(forms.Form):
+#     tablerow = forms.IntegerField(
+#         label = '行数',
+#         required = True,
+#         widget=forms.TextInput()
+#     )
