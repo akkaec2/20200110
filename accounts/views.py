@@ -1,15 +1,16 @@
-# from django.shortcuts import render
 from django.shortcuts import render, redirect 
 from django.views import View 
 from django.contrib.auth import login, authenticate 
 from django.contrib.auth.models import User 
 from django.views.generic import CreateView, TemplateView 
-from .forms import UserCreateForm, LoginForm, PailNumForm
-# from accounts.models import PailnumModel
+from .forms import UserCreateForm, LoginForm
 from django.http import HttpResponse
-# ,TablerowForm
+from .forms import UploadFileForm
+import os, csv
 
-pdict = {0:0}
+#Webサーバのファイルの指定　　のはず．．．
+#今回は「施工現場csv受信」にした
+# UPLOAD_DIR='http://10.82.90.69/%E5%BB%BA%E6%9D%90csv/%E6%96%BD%E5%B7%A5%E7%8F%BE%E5%A0%B4csv%E5%8F%97%E4%BF%A1/'
 
 
 # Create your views here.
@@ -23,7 +24,7 @@ class Account_login(TemplateView):
             username = form.cleaned_data.get('username') 
             user = User.objects.get(username=username) 
             login(request, user) 
-            return render(request,'operate.html') #operate.html
+            return render(request,'collation.html') #operate.html →　collation.html
         return render(request, 'login.html', {'form': form,}) #変更点　2019/9/26'login.html'→'index.html'へ
     def get(self, request, *args, **kwargs): 
         form = LoginForm(request.POST) 
@@ -53,71 +54,43 @@ class Create_Account(CreateView):
 
 create_account = Create_Account.as_view() 
  
-
-#ログイン後右側の画面（杭番号明細紐づけ画面）
-def pail_num_detail(request):
-    f=PailNumForm(data=request.POST)
-    if f.is_valid():
-        a = f.cleaned_data.get('pail_num')
-        b = f.cleaned_data.get('pail_detail_num')
-        p_dict(a,b)
-        return render(request,'ok.html')
-    return render(request,'pail_num_detail.html',{'form1':f})
-
-
-#ログイン後右側の画面（杭番号明細紐づけ画面）登録する
-def p_dict(p_num,p_detail_num):
-    pdict[p_num] = p_detail_num
-    a = pdict
-    return a
-
 #ログイン後画面表示
 def main_operate(request):
     # return HttpResponse("Hello, world.")
     return render(request,'operate.html')
 
-#ログイン後右側の画面（出荷情報受信画面）
-def deli_info(request):
-    return render(request,'deli_info.html')
-
 #ログイン後右側の画面（照合画面）
 def collation(request):
     # f = TablerowForm(data = request.POST)
     return render(request,'collation.html')#,{'form1':f}
+
 #ログイン後右側の画面（打設確認画面）
 def casting(request):
     return render(request,'casting.html')
-
-#ログイン後右側の画面（杭番号明細紐づけ画面登録後）
-def ok(request):
-    return render(request,'ok.html')
 
 #ログイン後右側の画面（確認画面）
 def confirm(request):
     return render(request,'confirm.html') 
 
-# class Pail_num_detail(CreateView):
-#     def post(self, request, *args, **kwargs):
-#         f = PailNumForm(data=request.POST)
-#         if f.is_vaild():
-#             f.save() 
-#             pail_num = f.cleaned_dataget["pail_num"]
-#             pail_detail_num = f.cleaned_data.get['pail_detail_num']
-#             # https://qiita.com/peijipe/items/009fc487505dfdb03a8d
-#             return render(request,'ok.html')
-#         return render(request, 'pail_num_detail.html', {'form1': f})
-#     def get(self, request, *args, **kwargs):
-#         f = PailNumForm(data=request.POST)
-#         return render(request,'pail_num_detail.html',{'form1': f})
-
-# pail_num_detail = Pail_num_detail.as_view()
 
 
 
-# class P_dict(PailNumForm):
-#     def p_dict(request,pail_num,pail_detail_num):
-#         a = pail_num
-#         b = pail_detail_num
-#         pail_dict[a] = b
-#         return render(request,'confirm.html')
-#             #    f1 = f['pail_num']
+#杭照合でのファイル選択
+def CsvUpload(request):
+    if request.method == 'POST':
+        #POST
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # file is saved. by binary
+            f = request.FILES['file']                       #ファイルデータを request.FILES で 受け取り
+            path = os.path.join(UPLOAD_DIR, f.name)         #ファイルパスとファイル名を統合したパス
+            with open(path) as csvfile:
+                l = csvfile.readlines()
+            return redirect('/')
+    
+    else:
+        #GET
+        form = UploadFileForm()
+
+        return render(request,'login.html',{'form': form})         #まだGETができていないので出来ていないときはLOGIN画面に飛んでもらう
+

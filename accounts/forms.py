@@ -23,23 +23,8 @@ class UserCreateForm(UserCreationForm):
        model = User 
        fields = ("username", "password1", "password2",) 
 
-class PailNumForm(forms.Form):
-    pail_num = forms.CharField(
-        label='杭番号',
-        # max_length=200,
-        required = True,
-        widget=forms.TextInput()
-    )
-    pail_detail_num = forms.CharField(
-        label='杭詳細番号',
-        # max_length=200,
-        required = True,
-        widget=forms.TextInput()
-    )
 
-# class TablerowForm(forms.Form):
-#     tablerow = forms.IntegerField(
-#         label = '行数',
-#         required = True,
-#         widget=forms.TextInput()
-#     )
+#csvをアップロードする仕組み
+class UploadFileForm(forms.Form):
+    #formのname属性が'file'になる
+     file = forms.FileField(required=True, label='CSVファイル')

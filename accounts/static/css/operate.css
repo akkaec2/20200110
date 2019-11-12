@@ -1,33 +1,22 @@
 body{
   display: flex;
   flex-direction: column;
+  /*  英数字はHelvetica、日本語は游ゴシックが適用される。 */
+  /* font-family: Helvetica , "游ゴシック", sans-serif; */
 }
-/* .head{
-  /* height: 70px; */
-  /* text-align: center; */
-  /* background-color: #D7EEFF; */
-  /* color: #fff; */
-/* } */
-/* .login_name { */
-  /* font-size: 10.0em; */
-  /* text-align: left;  文章を左寄せする(※) */
-  /* float: left;     左端に寄せて、後続を右側へ回り込ませる */
-/* } */
-/* .logout { */
-  /* text-align: right;文章を右寄せする */
-  /* float: right;  */
-  /* font-size: 2.0em;   */
-/* } */
+
 main{
   min-height: 1000vh;
   display: flex;
   margin-top: 5px;
+  
 }
 .main{
+  /* position: relative; */
   flex: 1;
   background-color: #eee;
-  text-align: center;
   margin-left: 5px;
+  text-align: center;
 }
 
 .menu{
@@ -38,34 +27,32 @@ main{
   font-size: 1.2em;  
 }
 
-li{
-  color: black;
-  border-left: solid 8px #2d8fdd;/*左側の線*/
-  background: #f1f8ff;/*背景色*/
-  margin-bottom: 0px;/*下のバーとの余白*/
-  line-height: 1.5;
-  border-radius: 0 15px 15px 0;/*右側の角だけ丸く*/
-  padding: 0.5em;
-  list-style-type: none!important;
+a.title{
+  font-size: 24px; 
+}
+/* .myform{
+  text-align: center;
 }
 
-.listbtn{
-  background: #f1f8ff;/*背景色*/
-  border-left: solid 8px #2d8fdd;/*左側の線*/
-  color: #142c5b;
-  /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3); */
+.operator{
+  position:absolute;
+  left:200px;
+}
+.operator-label{
+  text-align: center;
 }
 
-
+.pailnum{
+  position:absolute;
+  top:100px;
+  left:200px;
+} */
 
 #download{
-  font-size: 25px;
+  font-size: 24px;
+  font-weight:400;
 }
-
-/* .pail{
-  width: 200px;
-  background-color: #EEFFFF;
-  color: #333;
-   text-align: center;
- 
-} */
+#download_hway{
+  font-size: 24px;
+  font-weight:400;
+}

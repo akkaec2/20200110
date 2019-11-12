@@ -1,4 +1,3 @@
-
 <!DOCTYPE html> 
 {% load static %}
 <head>
@@ -11,18 +10,18 @@
     <form method="POST" action="{% url 'login' %}"> {% csrf_token %} 
       <div align="center">
         <fieldset>
-          <h1>Login</h1>
+          <h1>Login</h1><br>
           {% if form.errors  %} 
           <font color="red"><p>ユーザーID, パスワードが一致しません．</p> </font>
           {% endif %}
           <label>ユーザーID</label>
           {{ form.username }}
           {{ form.username.errors }}
-          <br><label>パスワード</label>
+          <br><br><label>パスワード</label>
           {{ form.password }} 
           {{ form.password.errors }} 
-          <br><br><button type="submit" name="login">ログイン</button><br>
-          <br><a href="{% url 'create_account' %}">アカウント作成</a>  
+          <br><br><br><button type="submit" name="login">ログイン</button><br><br>
+          <!-- <br><a href="{% url 'create_account' %}">アカウント作成</a>   -->
         </fieldset>
       </div>
     </form>

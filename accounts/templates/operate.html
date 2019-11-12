@@ -1,4 +1,3 @@
-
 <!DOCTYPE html> 
 {% load static %}
 <head>
@@ -6,19 +5,38 @@
     <title>メイン操作画面</title>
     <link rel="stylesheet" href="{% static 'css/operate.css' %}">
     <link rel="stylesheet" href="{% static 'css/head.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
 </head>
 <html lang="ja">      
 
     <body>
         <header class="head">
+            <span class="head-left">
+                <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
+            </span>
             <a class = "login_name">Login:{{ user.username }} さん</a>
             <a class = "logout" href="{% url 'logout' %}">ログアウト</a>
         </header>
         <main>
             <div class="menu">
-                <br><li><a href = "{% url 'collation' %}" target="_self">杭照合</a></li><br>
-                <li><a href = "{% url 'confirm' %}" target="_self">受入検査確認</a></li><br>
-                <li><a href = "{% url 'casting' %}" target="_self">打設位置・杭紐づけ/施工結果</a></li><br>
+                <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
+                        <span class="btn-social-flat-icon1">
+                            <span class="btn-social-flat-icon-paper icon1"></span>
+                        </span>
+                        杭照合
+                    </a><br>
+                <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
+                        <span class="btn-social-flat-icon">
+                            <span class="btn-social-flat-icon-light icon2"></span>
+                        </span>
+                        受入検査
+                    </a><br>
+                <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
+                        <span class="btn-social-flat-icon">
+                            <span class="btn-social-flat-icon-point icon3"></span>
+                        </span>
+                        打設位置+杭
+                    </a><br>
                 </div>
             <div class="main">
                 <p>コンテンツ</p>

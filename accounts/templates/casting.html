@@ -1,4 +1,3 @@
-
 <!DOCTYPE html> 
 {% load static %}
 <head>
@@ -12,51 +11,83 @@
 
     <body>
         <header class="head">
+            <span class="head-left">
+                <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
+            </span>
             <a class = "login_name">Login:{{ user.username }} さん</a>
-            <a class = "logout" href="{% url 'logout' %}">ログアウト</a>
+            <a class = "logout" href="{% url 'logout' %}">
+                <span class="btn-logout-icon door"></span><br>
+                ログアウト
+            </a>
         </header>
         <main>
             <div class="menu">
-                <br><li><a href = "{% url 'collation' %}" target="_self">杭照合</a></li><br>
-                <li><a href = "{% url 'confirm' %}" target="_self">受入検査確認</a></li><br>
-                <li><a href = "{% url 'casting' %}" target="_self">打設位置・杭紐づけ/施工結果</a></li><br>
+                <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
+                        <span class="btn-social-flat-icon1">
+                            <span class="btn-social-flat-icon-paper icon1"></span>
+                        </span>
+                        杭照合
+                    </a><br>
+                <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
+                        <span class="btn-social-flat-icon">
+                            <span class="btn-social-flat-icon-light icon2"></span>
+                        </span>
+                        受入検査
+                    </a><br>
+                <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
+                        <span class="btn-social-flat-icon">
+                            <span class="btn-social-flat-icon-point icon3"></span>
+                        </span>
+                        打設位置+杭
+                    </a><br>
              </div>
             <div class="main">
-                <p>打設位置・杭紐づけ/施工結果</p>
-                <form name="myform">
-                    <input name="csvget" id="csvget" type="file"><br><br>
-                    <textarea name="txtx" rows="5" cols="40" readonly></textarea>
+                <br><a class="title">打設位置+杭</a>
+                <form class="myform" name="myform">
+                    <br><input name="csvget" id="csvget" type="file"><br><br>
+                    <!-- <textarea name="txtx" rows="5" cols="40" readonly></textarea><br><br> -->
                 </form>
-                <table id="table2" border="1" align="center"><!-- 表 align="center"これで中央へ --><br>
+                <label class="operator-label">打設者:</label>
+                <input class="inpt" type="text" id="text2" name="text" size="20" ><br>
+                <label >注番:</label>
+                <input class="inpt" type="text" id="text" name="text" size="20" onchange="GetValue()"><br>
+                 <!-- javascriptで操作する場合 -->
+                <table id="table3" border="1" align="center"><!-- 表 align="center"これで中央へ --><br>
                     <br>
                     <tr>
-                        <!-- 見出し -->
+                        <th>No</th>
+                        <th>出荷実績</th>
+                        <th>受入実績</th>
+                        <th>受入者</th>
+                        <th>受入検査</th>
+                        <th>検査者</th>
                         <th>打設位置</th>
                         <th>断面</th>
-                        <th>注番</th>
-                        <th>完了</th>
-                        <th>打設完了時刻</th>
+                        <th>打設開始</th>
+                        <th>打設開始時刻</th>
+                        <th>打設者</th>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td><input class="inpval" type="text" id="cnum1" name="cnum1" size="3"></td>
                         <td><input class="inpval" type="text" id="crosec1" name="crosec1" size="5"></td>
                         <td><input class="inpval" type="text" id="txt1" name="txt1" size="20"></td>
                         <td><input class="inpche" type="checkbox" id="cb1" name="cb1" value = "1" onchange="nowtime(this.value)"></td>
-                        <!-- <td></td> -->
                         <td></td>
-                    </tr>
+                    </tr> -->
                 </table><br>
-                <button onclick="addTableRow();">行を追加</button>
-                <button onclick="deleteTableRow();">行を削除</button><br><br>  
-                <b><a id="download" href="#" download="施工結果.csv" onclick="handleDownload()">csvファイルダウンロード</a></b><br>
-                
-                
+                <!-- <button onclick="addTableRow();">行を追加</button>
+                <button onclick="deleteTableRow();">行を削除</button><br><br>   -->
+                <!-- <b><a id="download" href="#" download="施工結果.csv" onclick="handleDownload()">csv保存(着手)</a></b><br>
+                <b><a id="download_hway" href="#" download="施工結果.csv" onclick="Downloadcsvhalfway()">csv保存(未着手)</a></b><br> -->
+                <button type = "button" download="杭照合結果.csv" onclick="handleDownload()">csv保存(着手)</button>
+                <button type = "button" download="杭照合結果.csv" onclick="Downloadcsvhalfway()">csv保存(未着手)</button>
                 <!-- javascriptのコード↓ -->
                 <script type = "text/javascript" > 
                  /********************************
                  * csv読み込み
                 **********************************/
-                var table = document.getElementById('table2');  //表のオブジェクトを取得
+                var yu=0;                                        //，を打つ用．二回以上読みこんだときに","を加える
+                var table = document.getElementById('table3');  //表のオブジェクトを取得
                 var form = document.getElementById("csvget");
                 form.addEventListener('change',function(evt){
                     var file = evt.target.files[0];
@@ -70,134 +101,364 @@
                     reader.readAsText(file);
                     var data = new Array();
                     var rows =[];
-                    //ファイルの中身を取得後に処理を行う
-                    reader.addEventListener( 'load', function dataget() {
-                        //ファイルの中身をtextarea内に表示する
-                        // document.forms.myform.txtx.textContent = reader.result;    
-                        //ファイルの中身をtextarea内に表示する
+                    var pnum = new Array();
+                    //読込終了後の処理
+                    reader.addEventListener( 'load', function(){
+                       
                         // 行単位で配列にする
-                        var itemArr = reader.result.split(',');
-                        for(var i = 0; i < itemArr.length; i++){
-                            data =  reader.result.split(',');
+                        var rowArr = reader.result.split('\n');
+                        for(var i = 0; i < rowArr.length - 1; i++){
+                            data[i] =  rowArr[i].split(',');
                         }
-                        document.forms.myform.txtx.textContent = data;   
-                        console.log(data);
-                        // return data ;
+                        for(var j = 0; j < rowArr.length - 1 ; j++){
+                            rows.push(table.insertRow(-1));
+                            //列は見出しの数※今回は11個
+                            for(var k = 0; k < 11; k ++){　//k < data[0].length
+                                cell = rows[j].insertCell(-1);
+                                if(!(data[j][k])){
+                                    cell.innerHTML = "";
+                                }
+                                else{
+                                    cell.innerHTML = data[j][k]; 
+                                }
+                            }
+                            if(data[j][1]){
+                                    pnum.push(data[j][1]);
+                            }
+                        }
+                        // yu = yu + 1;
+                        // if(yu==1){
+                        //     document.forms.myform.txtx.textContent = pnum;   
+                        // }
+                        // else{
+                        //     document.forms.myform.txtx.textContent += ",";
+                        //     document.forms.myform.txtx.textContent += pnum;    
+                        // }
                     })
-                    // var obj = dataget();
-                    // console.log(obj);
-                },false)
+                },false);
 
-                /**********************
-                 * 表の一番下に行を追加
-                 **********************/
-                function addTableRow() {
-                    var table = document.getElementById('table2');  //表のオブジェクトを取得
-                    var count = table.rows.length;                  //行数をカウント
-                    var row   = table.insertRow(-1);                //行末に行(tr要素)を追加Kok
-                    var cell1 = row.insertCell(0);                  //セル(td要素)の追加
-                    var cell2 = row.insertCell(1); 
-                    var cell3 = row.insertCell(2);
-                    var cell4 = row.insertCell(3);
-                    var cell5 = row.insertCell(4);
-
-                    cell1.innerHTML = '<input class="inpval" type="text"   id="cnum' + count + '" name="cnum' + count + '" value="" size="3" >';                          //テキストボックスの作成：打設位置入力 
-                    cell2.innerHTML = '<input class="inpval" type="text"   id="crosec' + count + '" name="crosec' + count + '" value="" size="5" >';                         //テキストボックスの作成：打設時刻入力 
-                    cell3.innerHTML = '<input class="inpval" type="text"   id="txt' + count + '" name="txt' + count + '" value="" size="20" >';                           //テキストボックスの作成：通し番号
-                    cell4.innerHTML = '<input class="inpche" type="checkbox"   id="cb' + count + '" name="cb' + count + '" value="'+ count +'" onchange="nowtime(this.value)" >';             //チェックボックスの作成
-                    cell5.innerHTML = "";                         //テキストボックスの作成：打設時刻入力 
-
-                    // 追加した行の入力フィールドへフォーカスを設定
-                    var objInp = document.getElementById("txt" + count);
-                    if (objInp)
-                        objInp.focus();
-                }
                 /********************************
-                 * 表のいちばん下の行を削除
-                 **********************************/
-                function deleteTableRow() {
-                    var table = document.getElementById('table2');  //表のオブジェクトを取得
-                    var row_num = table.rows.length;                //表の行数を取得
-                    if (row_num>1) {                                //表に二行以上あるとき末尾行を削除（見出し行は削除しない）
-                        table.deleteRow(row_num - 1);               //末尾行を削除
-                    }
-                }
+                 * テキスト値取得，貼付け
+                **********************************/
+                function GetValue(){
+                     var pailnum = document.getElementById('text').value;       //杭番号（注番）
+                     var getname = document.getElementById('text2').value;      //受入者
+                    //  document.getElementById("textout").value = pailnum;
+                     var table = document.getElementById('table3');  //表のオブジェクトを取得
+                     var cells = new Array();
+                     // td内のtrをループ。rowsコレクションで,行位置取得。
+                     for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){ //11は列の数，これは変更する可能性あり
+                        //i行目の1列目のセルの値を取得(出荷実績)
+                        cells.push(table.rows[i].cells[1].innerHTML);
+                     }
+                     var pailnum_position = cells.indexOf(pailnum); //配列の中のpailnumの数値がある配列位置を取得
+                    //杭番号があれば
+                    if(pailnum_position > -1){
+                         //初めての読取りの場合(時間が入力されていなければ)
+                         if(!(table.rows[pailnum_position + 1].cells[9].innerHTML)){
+                            var pailnum_save = pailnum;//「注番」保存
+                         }
+                         //二度目の読取りの場合
+                        else{
+                            alert('既に読み込まれています');
+                            document.getElementById('text').value = "";
+                            document.getElementById('text').focus();
+                        }
+                     }
+                     else{
+                         alert('受入れた杭番号は出荷実績に含まれていません');
+                         document.getElementById('text').value = "";
+                         document.getElementById('text').focus();
+                     }
+                     
+                      //照合結果出力
+                     //出荷実績と通し番号が同じならばその行にテキストとチェックボックス出力
+                     if(table.rows[pailnum_position + 1].cells[1].innerHTML == pailnum_save){
+                        //テキストやチェックボックスの値を取得する際に文字列の結合になっていたので，その対応策
+                        var pailnum_position_plus1 = pailnum_position + 1 
+
+                        //打設位置
+                        table.rows[pailnum_position_plus1].cells[6].innerHTML = '<input class="inpval" type="text"   id="cnum' + pailnum_position_plus1 + '" name="cnum' + pailnum_position_plus1 + '" value="" size="5" >';      //テキストボックスの作成：打設位置入力 
+                        // //断面 テキストver
+                        // table.rows[pailnum_position + 1].cells[7].innerHTML ='<input class="inpval" type="text"   id="crosec' + pailnum_position_plus1 + '" name="crosec' + pailnum_position_plus1 + '" value="" size="3" >';   //テキストボックスの作成：断面入力 
+
+                        //断面 プルダウンver
+                        table.rows[pailnum_position_plus1].cells[7].innerHTML ='<select class="inpval" id="crosec' + pailnum_position_plus1 + '" name="crosec' + pailnum_position_plus1 + '" value=""  >';   //テキストボックスの作成：断面入力 
+                        for(var i = 0; i < table.rows.length - 1 ; i++){ //(行の数-1)が杭の数とする
+                            var selectElement = document.getElementById("crosec" + pailnum_position_plus1);
+                            var option = document.createElement("option"); //ここで<option>要素を作成
+                            if(i==0){
+                                option.value = "下"; //optionのvalue属性を設定
+                                option.innerText = "下"; //リストに表示するテキストを記述
+                                selectElement.appendChild(option); //セレクトボックスにoptionを追加
+                            }
+                            else if(i==table.rows.length-2){
+                                option.value = "上"; //optionのvalue属性を設定
+                                option.innerText = "上"; //リストに表示するテキストを記述
+                                selectElement.appendChild(option); //セレクトボックスにoptionを追加
+                            }
+                            else{
+                                option.value = "中" + i; //optionのvalue属性を設定
+                                option.innerText = "中" + i; //リストに表示するテキストを記述
+                                selectElement.appendChild(option); //セレクトボックスにoptionを追加
+                            }
+                        }
+                        //打設完了
+                        table.rows[pailnum_position_plus1].cells[8].innerHTML ='<input class="inpche" type="checkbox"   id="cb' +pailnum_position_plus1 + '" name="cb' + pailnum_position_plus1 + '" value="'+ pailnum_position_plus1 +'" onchange="nowtime(this.value)" >';   //チェックボックスの作成：打設開始
+                        document.getElementById('text').value = "";
+                        document.getElementById('text').focus();
+                        table.rows[pailnum_position_plus1].cells[10].innerHTML = document.getElementById('text2').value
+                     }  
+                 }
+
                 /**********************
                  * 完了時間の出力 & 打設杭の番号削除（一覧から）
                  **********************/
                  function nowtime(value){
                     //★完了時間の出力★
+                    var table = document.getElementById('table3');  //表のオブジェクトを取得
                     var now = new Date();
-                    var table = document.getElementById('table2');  //表のオブジェクトを取得
                     var Year = now.getFullYear();
                     var Month = now.getMonth()+1;
                     var date = now.getDate();
                     var Hour = now.getHours();
                     var Min = now.getMinutes();
                     var Sec = now.getSeconds();
-                    table.rows[value].cells[4].innerHTML = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;                        //テキストボックスの作成：打設位置入力 ;  //表のオブジェクトを取得
+                    table.rows[value].cells[9].innerHTML = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;         
 
-                    //★打設杭の番号削除★
-                    var textdata = new Array();
-                    //テキストフィールドにある値をtextdataに格納
-                    var itemArr =  document.forms.myform.txtx.textContent.split(',');
-                    for(var i = 0; i < itemArr.length; i++){
-                        textdata =  document.forms.myform.txtx.textContent.split(',');
-                    }
-                    document.forms.myform.txtx.textContent = textdata;  //テキストフィールドにcsvの値出力 
-                    var check_row_name = document.getElementById('cb'+ value).name;　//チェックボックスの列名前取得
-                    var check_row_num = check_row_name.slice(-1);//チェックボックスの列番号取得
-                    var text_value = document.getElementById('txt'+ check_row_num).value;//チェックボックスと同じ列のテキストの値取得
-                    var pnum_position = textdata.indexOf(text_value); //配列の中のpnumの数値がある配列位置を取得
-                    textdata.splice(pnum_position,1);
-                    document.forms.myform.txtx.textContent = textdata;  
+                    // //★打設杭の番号削除★
+                    // var textdata = new Array();
+                    // //テキストフィールドにある値をtextdataに格納
+                    // var itemArr =  document.forms.myform.txtx.textContent.split(',');
+                    // for(var i = 0; i < itemArr.length; i++){
+                    //     textdata =  document.forms.myform.txtx.textContent.split(',');
+                    // }
+                    // console.log(textdata);
+                    // document.forms.myform.txtx.textContent = textdata;  //テキストフィールドにcsvの値出力 
+                    // var check_row_name = document.getElementById('cb'+ value).name;　//チェックボックスの列名前取得
+                    // console.log(check_row_name);
+                    // var check_row_num = check_row_name.slice(2);//チェックボックスの列番号取得     
+                    // console.log(check_row_num);                                                                
+                    // var text_value = table.rows[value].cells[1].innerHTML   //document.getElementById('txt'+ check_row_num).value;//チェックボックスと同じ列の杭番号取得
+                    // var pnum_position = textdata.indexOf(text_value); //配列の中のpnumの数値がある配列位置を取得
+                    // textdata.splice(pnum_position,1);
+                    // document.forms.myform.txtx.textContent = textdata;  
+
+                    //★テキストやチェックボックスに記入された値をそのままテーブルに書込み★　←　一度記入したら変更不可とする
+                    //打設位置をテキストからテーブルに記入
+                    var save_CastPosition = document.getElementById('cnum'+ value).value;   
+                    table.rows[value].cells[6].innerHTML = "";
+                    table.rows[value].cells[6].innerHTML = save_CastPosition;
+
+                    //断面をテキストからテーブルに記入
+                    var save_CrossSection = document.getElementById('crosec'+ value).value;   
+                    table.rows[value].cells[7].innerHTML = "";
+                    table.rows[value].cells[7].innerHTML = save_CrossSection;
+
+                    //打設完了をテキストからテーブルに記入
+                    // var save_CastOk = document.getElementById('cb'+ value).value;   
+                    // table.rows[value].cells[8].innerHTML = "";
+                    // table.rows[value].cells[8].innerHTML = CastOk;
+                    table.rows[value].cells[8].innerHTML = "1";
+
                 }
                 /********************************
-                 * csvダウンロード
+                 * csvダウンロード(着手)
                  **********************************/
-                function handleDownload() {
-                    var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);   //文字コードをBOM付きUTF-8に指定
-                    var table = document.getElementById('table2');  //id=table2という要素を取得
-                    var data_csv="";                                //ここに文字データとして値を格納していく
+                 function handleDownload() {
+                    var bom_end = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
+                    var table = document.getElementById('table3');  //id=table3という要素を取得
+                    var data_csv_end = "";                            //ここに文字データとして値を格納していく　終わったもの
+                    var cells = new Array();
+                     // td内のtrをループ。rowsコレクションで,行位置取得。
+                     for(var i = 1; i < table.rows.length; i++){ //11は列の数，これは変更する可能性あり
+                        if(!(table.rows[i].cells[9].innerHTML)){　  //途中のもの
+                            continue;
+                        }
+                        else{                                       //終わったもの
+                            //i行目の1列目のセルの値を取得(出荷実績)
+                            cells.push(table.rows[i].cells[1].innerHTML);
+                        }
+                     }
                 /********************************
                 一番上に見出しを付けて次に値の出力
                 ********************************/
-                    for(var i = 0;  i < 1; i++){
-                        for(var j = 0; j < table.rows[i].cells.length; j++){
-                            data_csv += table.rows[i].cells[j].innerHTML;               //HTML中の表のセル値をdata_csvに格納
-                            if(j == table.rows[i].cells.length-1) data_csv += "\n";     //行終わりに改行コードを追加
-                            else data_csv += ",";                                       //セル値の区切り文字として,を追加
+                    // ===============================================================
+                    // 見出しを付けてしまってはcsvで合体させるときに邪魔になるから排除する
+                    // ===============================================================
+                    // for(var i = 0;  i < 1; i++){
+                    //     for(var j = 0; j < table.rows[i].cells.length; j++){
+                    //         data_csv += table.rows[i].cells[j].innerHTML;               //HTML中の表のセル値をdata_csvに格納
+                    //         if(j == table.rows[i].cells.length-1) data_csv += "\n";     //行終わりに改行コードを追加
+                    //         else data_csv += ",";                                       //セル値の区切り文字として,を追加
+                    //     }
+                    // }
+                    for(var i=1; i < table.rows.length; i++){
+                        //途中のもの
+                        if(!(table.rows[i].cells[9].innerHTML)){
+                            continue;
+                        }
+                        //終わったもの
+                        else{
+                            data_csv_end += i;
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[1].innerHTML; //出荷実績
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[2].innerHTML; //照合結果
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[3].innerHTML; //受入者
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[4].innerHTML; //受入検査
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[5].innerHTML; //検査者
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[6].innerHTML; //打設位置
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[7].innerHTML; //断面
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[8].innerHTML; //打設完了
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[9].innerHTML; //打設完了時間
+                            data_csv_end += ",";//セル値の区切り文字として,を追加
+                            data_csv_end += table.rows[i].cells[10].innerHTML; //打設者
+                            data_csv_end += "\n";//行終わりに改行コードを追加
                         }
                     }
-                    for(var i=1;i<table.rows.length;i++){
-                        data_csv += document.getElementById("cnum"+i).value;            //入力した打設位置番号取得
-                        data_csv += ",";                                                //セル値の区切り文字として,を追加
-                        data_csv += document.getElementById("crosec"+i).value;            //入力した打設位置番号取得
-                        data_csv += ",";                                                //セル値の区切り文字として,を追加
-                        data_csv += document.getElementById("txt"+i).value;             //バーコードで読み取った通し番号取得
-                        data_csv += ",";                                                //セル値の区切り文字として,を追加
-                        if(document.getElementById("cb"+i).checked == true)
-                            {data_csv +=1;}　                                           //チェックがはいいていたら1をはいいていないと0取得
-                        else{data_csv +=0;}
-                        data_csv += ",";                                                //セル値の区切り文字として,を追加
-                        data_csv += table.rows[i].cells[4].innerHTML;               //打設時刻取得
-                        data_csv += "\n";                                               //行終わりに改行コードを追加
+                    // var now = new Date();
+                    // var Year = now.getFullYear();
+                    // var Month = now.getMonth()+1;
+                    // var date = now.getDate();
+                    // var Hour = now.getHours();
+                    // var Min = now.getMinutes();
+                    // var Sec = now.getSeconds();
+                    // var filename = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;
+                //*******************************
+                    //★終わったもの★
+                    var blob_end = new Blob([ bom_end, data_csv_end], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+                    //★ハイパーリンク
+                    // if (window.navigator.msSaveBlob) { //IEの場合の処理
+                    //     // window.navigator.msSaveBlob(blob, filename+".csv"); 
+                    //     window.navigator.msSaveBlob(blob_end, "出力_" + cells + ".csv"); 
+                    //     //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+                    // } 
+                    // else {
+                    //     document.getElementById("download").href = window.URL.createObjectURL(blob_end);
+                    //     // document.getElementById("download").download = filename+".csv";
+                    //     document.getElementById("download").download = "出力_" + cells + ".csv";
+                    // }
+                    //★ボタン
+                    let link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob_end);
+                    link.download =  "出力_" + cells + ".csv";
+                    link.click();
+                    delete data_csv_end;//data_csvオブジェクトはもういらないので消去してメモリを開放
+                }
+
+                /********************************
+                 * csvダウンロード(未着手)
+                 **********************************/
+                 function Downloadcsvhalfway() {
+                    var bom_hway = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
+                    var table = document.getElementById('table3');  //id=table3という要素を取得
+                    var data_csv_hway = "";                            //ここに文字データとして値を格納していく　終わったもの
+                    var pnumarr = new Array();
+                     // td内のtrをループ。rowsコレクションで,行位置取得。
+                     for(var i = 1; i < table.rows.length; i++){
+                        if((table.rows[i].cells[9].innerHTML)){　  //終わったもの
+                            continue;
+                        }
+                        else{                                       //途中のもの
+                            pnumarr.push(table.rows[i].cells[1].innerHTML);
+                        }
+                     }
+                /********************************
+                一番上に見出しを付けて次に値の出力
+                ********************************/
+                    for(var i=1; i < table.rows.length; i++){
+                        //終わったもの
+                        if((table.rows[i].cells[9].innerHTML)){
+                            continue;
+                        }
+                        //途中のもの
+                        else{
+                            data_csv_hway += i;
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[1].innerHTML; //出荷実績
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[2].innerHTML; //照合結果
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[3].innerHTML; //受入者
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[4].innerHTML; //受入検査
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[5].innerHTML; //検査者
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[6].innerHTML; //打設位置
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[7].innerHTML; //断面
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[8].innerHTML; //打設完了
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[9].innerHTML; //打設完了時間
+                            data_csv_hway += ",";//セル値の区切り文字として,を追加
+                            data_csv_hway += table.rows[i].cells[10].innerHTML; //打設者
+                            data_csv_hway += "\n";//行終わりに改行コードを追加
+                        }
                     }
                 //*******************************
-                    var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
-                    if (window.navigator.msSaveBlob) { //IEの場合の処理
-                        window.navigator.msSaveBlob(blob, "施工結果.csv"); 
-                        //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-                    } 
-                    else {
-                        document.getElementById("download").href = window.URL.createObjectURL(blob);
-                    }
-                    delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
+                    //★未着手★
+                    var blob_hway = new Blob([ bom_hway, data_csv_hway], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+                    //★ハイパーリンク
+                    // if (window.navigator.msSaveBlob) { //IEの場合の処理
+                    //     window.navigator.msSaveBlob(blob_hway, "打設位置_未着手_" + pnumarr + ".csv"); 
+                    // } 
+                    // else {
+                    //     document.getElementById("download_hway").href = window.URL.createObjectURL(blob_hway);
+                    //     document.getElementById("download_hway").download = "打設位置_未着手_" + pnumarr + ".csv";
+                    // }
+                    //★ボタン
+                    let link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob_hway);
+                    link.download =  "打設位置_未着手_" + pnumarr + ".csv";
+                    link.click();
+                    delete data_csv_hway;//data_csvオブジェクトはもういらないので消去してメモリを開放
                 }
+                // /**********************
+                //  * 表の一番下に行を追加
+                //  **********************/
+                // function addTableRow() {
+                //     var table = document.getElementById('table2');  //表のオブジェクトを取得
+                //     var count = table.rows.length;                  //行数をカウント
+                //     var row   = table.insertRow(-1);                //行末に行(tr要素)を追加Kok
+                //     var cell1 = row.insertCell(0);                  //セル(td要素)の追加
+                //     var cell2 = row.insertCell(1); 
+                //     var cell3 = row.insertCell(2);
+                //     var cell4 = row.insertCell(3);
+                //     var cell5 = row.insertCell(4);
+
+                //     cell1.innerHTML = '<input class="inpval" type="text"   id="cnum' + count + '" name="cnum' + count + '" value="" size="3" >';                          //テキストボックスの作成：打設位置入力 
+                //     cell2.innerHTML = '<input class="inpval" type="text"   id="crosec' + count + '" name="crosec' + count + '" value="" size="5" >';                         //テキストボックスの作成：打設時刻入力 
+                //     cell3.innerHTML = '<input class="inpval" type="text"   id="txt' + count + '" name="txt' + count + '" value="" size="20" >';                           //テキストボックスの作成：通し番号
+                //     cell4.innerHTML = '<input class="inpche" type="checkbox"   id="cb' + count + '" name="cb' + count + '" value="'+ count +'" onchange="nowtime(this.value)" >';             //チェックボックスの作成
+                //     cell5.innerHTML = "";                         //テキストボックスの作成：打設時刻入力 
+
+                //     // 追加した行の入力フィールドへフォーカスを設定
+                //     var objInp = document.getElementById("txt" + count);
+                //     if (objInp)
+                //         objInp.focus();
+                // }
+                // /********************************
+                //  * 表のいちばん下の行を削除
+                //  **********************************/
+                // function deleteTableRow() {
+                //     var table = document.getElementById('table2');  //表のオブジェクトを取得
+                //     var row_num = table.rows.length;                //表の行数を取得
+                //     if (row_num>1) {                                //表に二行以上あるとき末尾行を削除（見出し行は削除しない）
+                //         table.deleteRow(row_num - 1);               //末尾行を削除
+                //     }
+                // }
                 </script>  
             </div>
         </main>
     </body>
-        
-    
 </html> 

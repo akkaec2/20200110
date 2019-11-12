@@ -1,24 +1,117 @@
 body{
   display: flex;
   flex-direction: column;
+  /*  英数字はHelvetica、日本語は游ゴシックが適用される。 */
+  font-family: Helvetica , "游ゴシック", sans-serif;
 }
 .head{
+  position: relative;
   height: 80px;
   align-items: center;
-  /* background-color: #D7EEFF; */
-  background-color: #0000EE;
- 
+  /* background-color: rgb(211, 240, 253); */
 }
-.login_name {
-  font-size: 40px;
-  text-align: left;  /* 文章を左寄せする(※) */
-  float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
+/* 旭化成建材のロゴ */
+.head-left{
+  position:absolute; 
+  height: 30px;
   align-items: center;
-  color: #fff;
+  background-color: #fff;
+  padding: 25px 5px 25px 0px;
+  /* box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8); */
 }
+
+.login_name {
+  position:absolute;
+  font-size: 20px;
+  text-align: left;  /* 文章を左寄せする(※) */
+  align-items: center;
+  color: #333;
+  left :470px;
+  top:25px;
+}
+
+/* ログアウトボタン */
+/* .logout {
+  position:absolute;
+  display: inline-block;
+  text-decoration: none;
+  color: #0a2fff;
+  width: 80px;
+  height: 80px;
+  line-height: 85px;
+  text-align: center;
+  overflow: hidden;
+  right : 0px;
+  background-color: #b7e3ff;
+  border: solid 2px #0000FF;
+  border-radius: 3px;
+} */
+
+/* ログアウトアイコン　ベース */
 .logout {
+  position:absolute;
+  display: inline-block;
+  text-decoration: none;
+  width: 80px;
+  height: 80px;
+  right : 0px;
+  background-color: #b7e3ff;
+  border: solid 2px rgba(0, 119, 255, 0.952);
+  border-radius: 3px;
+}
+
+/* ログアウト扉　ベース */
+.btn-logout-icon {
+  display: inline-block;
+  position:relative;
+  width: 30px;
+  height: 40px;
+  text-align: center;
+  background:#1da1f3;
+  margin: 15px 0px 0 25px;
+}
+
+/* ログアウト扉　取って */
+.door:before{
+  content:''; 
+  display:block; 
+  position:absolute; 
+  top:17px; 
+  left:3px;
+  height:5px; 
+  width:5px; 
+  background:#fff;
+  border-radius:30px;
+}
+/* .door:after{
+  content:''; 
+  display:block; 
+  position:absolute; 
+  top:19px; 
+  left:22px;
+  height:23px; 
+  width:6px; 
+  background:#fff; 
+  border-radius:10px;
+  transform:rotate(-45deg);
+  -webkit-transform:rotate(-45deg);
+  -o-transform:rotate(-45deg);
+} */
+
+
+/* --------------------------------- */
+/*使用していないもの
+/* --------------------------------- */
+.logout1 {
   text-align: right;/*文章を右寄せする */
   float: right;   
   font-size: 20px;
   color:#fff;
+}
+.login_name1 {
+  font-size: 20px;
+  text-align: left;  /* 文章を左寄せする(※) */
+  float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
+  align-items: center;
+  color: #fff;
 }
