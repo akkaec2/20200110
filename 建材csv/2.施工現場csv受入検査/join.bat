@@ -1,6 +1,8 @@
-﻿@echo off
+﻿REM @echo off
  
-for /f %%i in ('dir /b *.csv') do (
-    echo %%i
-    type %%i>>result.csv
-)
+REM for /f %%i in ('dir /b *.csv') do (
+REM     echo %%i
+REM     type %%i>>result.csv
+REM )
+
+copy /b *.csv result.csv
