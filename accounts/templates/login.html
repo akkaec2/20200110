@@ -7,6 +7,7 @@
 </head>
 <html lang="ja"> 
   <body>
+   
     <form method="POST" action="{% url 'login' %}"> {% csrf_token %} 
       <div align="center">
         <fieldset>
@@ -21,7 +22,7 @@
           {{ form.password }} 
           {{ form.password.errors }} 
           <br><br><br><button type="submit" name="login">ログイン</button><br><br>
-          <br><a href="{% url 'create_account' %}">アカウント作成</a>  
+          <!-- <br><a href="{% url 'create_account' %}">アカウント作成</a>   -->
         </fieldset>
       </div>
     </form>
