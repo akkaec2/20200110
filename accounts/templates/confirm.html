@@ -40,15 +40,21 @@
                         </span>
                         打設位置+杭
                     </a><br>
+                    <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
+                        <span class="btn-social-flat-icon">
+                            <span class="btn-social-flat-icon-point icon3"></span>
+                        </span>
+                        進捗管理
+                </a><br>
              </div>
             <div class="main">
                 <br><a class="title">受入検査</a>
                 <form class="myform" name="myform">
                     <br><input name="csvget" id="csvget" type="file" ><br><br>
                 </form>
-                <label>操作者:</label>
+                <label>検査者:</label>
                 <input class="inpt" type="text" id="text2" name="text" size="20" ><br>
-                <label>注番:</label>
+                <label>通し番号:</label>
                 <input class="inpt" type="text" id="text" name="text" size="20" onchange="GetValue()"><br><br>
                 <!-- <div id = "tabledivid" align="center" ></div><br><br> -->
                 <table id = "table2" border="1" align="center" >

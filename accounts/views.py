@@ -56,15 +56,19 @@ create_account = Create_Account.as_view()
 #     # return HttpResponse("Hello, world.")
 #     return render(request,'operate.html')
 
-#ログイン後右側の画面（照合画面）
+#ログイン後右側の画面（杭照合）
 def collation(request):
     # f = TablerowForm(data = request.POST)
     return render(request,'collation.html')#,{'form1':f}
 
-#ログイン後右側の画面（確認画面）
+#ログイン後右側の画面（受入検査）
 def confirm(request):
     return render(request,'confirm.html') 
 
-#ログイン後右側の画面（打設確認画面）
+#ログイン後右側の画面（打設位置＋杭）
 def casting(request):
     return render(request,'casting.html')
+
+#ログイン後右側の画面（進捗管理）
+def management(request):
+    return render(request,'management.html')
