@@ -256,7 +256,13 @@
                     // var Sec = now.getSeconds();
                     // var filename = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;
                 //*******************************
-                    var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+
+
+                    // var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+
+                    var blob = new Blob([ bom, data_csv], { "type" : 'application/octet-stream' });//data_csvのデータをcsvとしてダウンロードする関数
+
+
                     //★ハイパーリンク
                     // if (window.navigator.msSaveBlob) { //IEの場合の処理
                     //     // window.navigator.msSaveBlob(blob, "杭照合結果.csv"); 
@@ -270,12 +276,18 @@
                     //     // document.getElementById("download").download = filename+".csv";
                     //     document.getElementById("download").download = "受入検査_"+cells+".csv";
                     // }
-                    let link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download =  "受入検査_" + cells + ".csv";
-                    link.click();
-                    delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
-                
+
+
+                    // let link = document.createElement('a');
+                    // link.href = window.URL.createObjectURL(blob);
+                    // link.download =  "受入検査_" + cells + ".csv";
+                    // link.click();
+                    // delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
+
+
+                    saveAs(blob, "受入検査_" + cells + ".csv")
+
+
                 //*********************************
                 // //*バッチファイルの実行
                 //     var obj = new ActiveXObject("WScript.Shell");
