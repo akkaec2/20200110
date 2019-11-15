@@ -1,3 +1,10 @@
+body{
+  display: flex;
+  flex-direction: column;
+  /*  英数字はHelvetica、日本語は游ゴシックが適用される。 */
+  font-family: Helvetica , "游ゴシック", sans-serif;
+}
+
 fieldset{
   width:75%;
   margin:0 auto;
@@ -27,6 +34,7 @@ button[type="submit"]{
   box-shadow: 2px 2px 3px 1px #666;
   -moz-box-shadow: 2px 2px 3px 1px #666;
   -webkit-box-shadow: 2px 2px 3px 1px #666;
+  font-family: Helvetica , "游ゴシック", sans-serif;
 }
 
 label {
