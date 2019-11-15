@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 
 
 #静的ファイルのパス作成
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'accounts/static') #20191115試し変更
 
 # # とりあえずコピー
 # # カスタムユーザーを使う
