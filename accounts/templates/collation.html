@@ -258,10 +258,7 @@
                 //*******************************
 
 
-                    // var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
-
-                    var blob = new Blob([ bom, data_csv], { "type" : 'application/octet-stream' });//data_csvのデータをcsvとしてダウンロードする関数
-
+                    var blob = new Blob([ bom, data_csv], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
 
                     //★ハイパーリンク
                     // if (window.navigator.msSaveBlob) { //IEの場合の処理
@@ -278,15 +275,11 @@
                     // }
 
 
-                    // let link = document.createElement('a');
-                    // link.href = window.URL.createObjectURL(blob);
-                    // link.download =  "受入検査_" + cells + ".csv";
-                    // link.click();
-                    // delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
-
-
-                    saveAs(blob, "受入検査_" + cells + ".csv")
-
+                    let link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download =  "受入検査_" + cells + ".csv";
+                    link.click();
+                    delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
 
                 //*********************************
                 // //*バッチファイルの実行
