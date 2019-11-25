@@ -28,19 +28,19 @@
                         <span class="btn-social-flat-icon1">
                             <span class="btn-social-flat-icon-paper icon1"></span>
                         </span>
-                        杭照合
+                        納品確認
                     </a><br>
                 <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
                         <span class="btn-social-flat-icon">
                             <span class="btn-social-flat-icon-light icon2"></span>
                         </span>
-                        受入検査
+                        材料検査
                     </a><br>
                 <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
                         <span class="btn-social-flat-icon">
                             <span class="btn-social-flat-icon-point icon3"></span>
                         </span>
-                        打設位置+杭
+                        杭番号+杭
                     </a><br>
                 <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
                         <span class="btn-social-flat-icon">
@@ -52,13 +52,13 @@
                 </a><br>
              </div>
             <div class="main">
-                <br><a class="title">杭照合</a>
+                <br><a class="title">納品確認</a>
                 <form class="myform" name="myform">
                     <br><input name="csvget" id="csvget" type="file" ><br><br>
                 </form>
-                <label class="operator-label">受入者:</label>
+                <label class="operator-label">納品者:</label>
                 <input class="inpt" type="text" id="text2" name="text" size="20" ><br>
-                <label >通し番号:</label>
+                <label >連番:</label>
                 <input class="inpt" type="text" id="text" name="text" size="20" onchange="GetValue()"><br>
                  <!-- javascriptで操作する場合 -->
                 <table id="table1" border="1" align="center"><br>
@@ -66,8 +66,8 @@
                     <tr>
                         <th>No</th>
                         <th>出荷実績</th>
-                        <th>受入実績</th>
-                        <th>受入者</th>
+                        <th>納品実績</th>
+                        <th>納品者</th>
                         <!-- <th>受入検査</th>
                         <th>検査者</th>
                         <th>打設位置</th>
@@ -78,7 +78,7 @@
                     </tr>
                 </table><br>
                 <!-- <b><a id="download" href="#" download="杭照合結果.csv" onclick="handleDownload()">csv保存</a></b><br>　 -->
-                <button type = "button" download="杭照合結果.csv" onclick="handleDownload()">csv保存</button>
+                <button type = "button" download="杭照合結果.csv" onclick="handleDownload()">登録</button>
 
                 <!-- ********************************
                  * javascript code↓
@@ -162,7 +162,7 @@
                         }
                      }
                      else{
-                         alert('受入れた杭番号は出荷実績に含まれていません');
+                         alert('納品した杭番号は出荷実績に含まれていません');
                          document.getElementById('text').value = "";
                          document.getElementById('text').focus();
                      }
@@ -277,7 +277,7 @@
 
                     let link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download =  "受入検査_" + cells + ".csv";
+                    link.download =  "材料検査_" + cells + ".csv";
                     link.click();
                     delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
 
