@@ -7,25 +7,37 @@ body{
 
 fieldset{
   width:75%;
-  margin:0 auto;
+  /* margin:0 auto; */
   margin-top:200px;
   margin-bottom:0%;
   transition:opacity 1s;
   -webkit-transition:opacity 1s;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-block-start: 0em;
+  padding-inline-start: 0em;
+  padding-inline-end: 0em;
+  padding-block-end: 0em;
 }
 
 h1{
   background:rgb(2, 164, 240);
   padding:20px 0; /*PADDING TODOS OS LADOS DE 20PX*/
-  font-size:40px;
-  font-weight:400;
+  font-size:60px;
+  font-weight:600;
   text-align:center;
   color:#FFF;
+  /* margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px; */
+
 }
 button[type="submit"]{
-  width:50%;
-  padding:2%;
-  font-size:130%;
+  width:40%;
+  padding:1.5%;
+  font-size:170%;
+  font-weight: 500;
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px; 
   border-radius: 5px;  
@@ -40,10 +52,20 @@ button[type="submit"]{
 label {
   /* すべてのラベルを同じサイズにして、きちんと揃える */
   display: inline-block;
-  width: 100px;
+  width: 150px;
   text-align: right;
-  font-size:1.2em;
+  font-size:1.4em;
   /* background: orange; */
 }
 
+#id_username{
+  font-size: 1.4em;  
+  width:170px;
+  height:30px;
+}
 
+#id_password{
+  font-size: 1.4em;  
+  width:170px;
+  height:30px;
+}

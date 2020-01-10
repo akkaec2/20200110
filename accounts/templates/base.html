@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="viewport" content="content"> -->
+  <meta charset="UTF-8">
+  <title>{% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/operate.css' %}">
+  <link rel="stylesheet" href="{% static 'css/head.css' %}">
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+<html lang="ja">
+  <header class="head">
+    <span class="head-left">
+      <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
+    </span>
+    <a class = "login_name">Login:{{ user.username }} さん</a>
+    <a class = "logout" href="{% url 'logout' %}">
+      <span class="btn-logout-icon door"></span><br>
+      ログアウト
+    </a>
+  </header>
+  <body>
+    <main>
+      <div class="menu">
+        <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
+              <span class="btn-social-flat-icon1">
+                <span class="btn-social-flat-icon-paper icon1"></span>
+              </span>
+              納品確認
+        </a><br>
+        <!-- <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
+              <span class="btn-social-flat-icon">
+                <span class="btn-social-flat-icon-light icon2"></span>
+              </span>
+              材料検査
+            </a><br> -->
+        <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
+                <span class="btn-social-flat-icon">
+                  <span class="btn-social-flat-icon-point icon3"></span>
+                </span>
+                打設
+            </a><br>
+        <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
+                <span class="btn-social-flat-icon">
+                  <span class="btn-social-flat-icon-clock">
+                    <span class="icon4"></span>
+                  </span>
+                </span>
+                進捗管理
+        </a><br>
+      </div>
+      <div class="main">
+          {% block content %}
+            {{ content }}
+          {% endblock %}
+      </div>
+    </main>
+  </body>
+</html>

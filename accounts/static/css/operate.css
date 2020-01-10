@@ -27,32 +27,139 @@ main{
   font-size: 1.2em;  
 }
 
+label{
+  font-size:32px;
+}
+
+a.kensaku{
+  font-size: 30px;
+  font-weight:600;
+}
+
 a.title{
-  font-size: 24px; 
-}
-/* .myform{
-  text-align: center;
+  font-size: 30px;
 }
 
-.operator{
-  position:absolute;
-  left:200px;
-}
-.operator-label{
-  text-align: center;
+a.syusei{
+  font-size: 30px;
+  font-weight:600;
 }
 
-.pailnum{
-  position:absolute;
-  top:100px;
-  left:200px;
+/* input.csvget{
+  font-size: 20px;
 } */
 
-#download{
-  font-size: 24px;
-  font-weight:400;
+input[type="file"]{
+  font-size: 20px;
 }
-#download_hway{
-  font-size: 24px;
-  font-weight:400;
+
+input.serial_num{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+input.correct_serial_num{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+input.caster{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+input.pail_num{
+  font-size: 2.0em;  
+  width:80px;
+  height:45px;
+}
+
+input.m_serial_num{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+
+}
+input.m_pail_num{
+  font-size: 2.0em;  
+  width:80px;
+  height:50px;
+}
+
+select.m_cross_section{
+  font-size: 2.0em;  
+  width:80px;
+  height:45px;
+}
+#id_delivery_checker{
+  font-size: 2.0em;  
+  width:140px;
+  height:45px;
+}
+
+#id_inspector{
+  font-size: 2.0em;  
+  width:140px;
+  height:45px;
+}
+
+#id_caster{
+  font-size: 2.0em;  
+  width:140px;
+  height:45px;
+}
+
+#id_pail_num{
+  font-size: 2.0em;  
+  width:80px;
+  height:45px;
+}
+
+#id_file{
+  /* color: #B20000; */
+  /* font-weight:bold; */
+  font-size: 20px;
+
+}
+
+#id_serial_num{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+#id_cross_section{
+  font-size: 2.0em;  
+  width:80px;
+  height:50px;
+}
+
+/* input.delivery_checker{
+  font-size: 1.0em;  
+  width:140px;
+  height:30px;
+} */
+
+/* input.inspector{
+  font-size: 1.0em;  
+  width:140px;
+  height:30px;
+} */
+
+select.cross_section{
+  font-size: 2.0em;  
+  width:80px;
+  height:50px;
+}
+
+input.btn{
+  width: 10%;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #0000EE;/* èƒŒæ™¯è‰²ã‚’ç·‘è‰²ã«æŒ‡å®š */
+  color: #fff;/* æ–‡å­—è‰²ã‚’é»’ã«æŒ‡å®š */
+  font-size: 28px;
 }

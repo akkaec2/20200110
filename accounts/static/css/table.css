@@ -1,6 +1,6 @@
 /* 杭照合用 */
 #table1{
-  width: 50%;
+  width: 30%;
 }
 #table1 th{
   height: 40px;
@@ -10,14 +10,15 @@
 }
 #table1 td{
   height: 40px;
+  font-size:24px;
 }
-#table1 td input[type=text]{
+/* #table1 td input[type=text]{
   height: 25px;
 }
 #table1 td input[type=checkbox]{
   width:			24px;
 	height:			24px;
-}
+} */
 
 /* 受入検査用 */
 #table2{
@@ -30,15 +31,16 @@
   color: #333
 }
 #table2 td{
+  font-size:24px;
   height: 40px;
 }
-#table2 td input[type=text]{
+/* #table2 td input[type=text]{
   height: 25px;
 }
 #table2 td input[type=checkbox]{
   width:			24px;
 	height:			24px;
-}
+} */
 
 /* 打設＋杭用 */
 #table3{
@@ -51,26 +53,25 @@
   color: #333
 }
 #table3 td{
+  font-size:24px;
   height: 40px;
 }
-#table3 td input[type=text]{
+/* #table3 td input[type=text]{
   height: 25px;
 }
 #table3 td input[type=checkbox]{
   width:			24px;
 	height:			24px;
-}
+} */
 
-label{
-  font-size:24px;
-}
+
 .inpt{
   height: 24px;
 }
 
-button{
-  width: 13%;
-  padding: 10px;
+button.button{
+  width: 10%;
+  padding: 5px;
   /* font-size:100%; */
   /* -moz-border-radius: 5px;  */
   /* -webkit-border-radius: 5px;  */
@@ -80,9 +81,23 @@ button{
   /* box-shadow: 2px 2px 3px 1px #666; */
   /* -moz-box-shadow: 2px 2px 3px 1px #666; */
   /* -webkit-box-shadow: 2px 2px 3px 1px #666; */
-  font-size: 20px;
+  font-size: 28px;
 }
 
+button.button1{
+  width: 10%;
+  padding: 5px;
+  /* font-size:100%; */
+  /* -moz-border-radius: 5px;  */
+  /* -webkit-border-radius: 5px;  */
+  border-radius: 5px;
+  background-color: #0000EE;/* èƒŒæ™¯è‰²ã‚’ç·‘è‰²ã«æŒ‡å®š */
+  color: #fff;/* æ–‡å­—è‰²ã‚’é»’ã«æŒ‡å®š */
+  /* box-shadow: 2px 2px 3px 1px #666; */
+  /* -moz-box-shadow: 2px 2px 3px 1px #666; */
+  /* -webkit-box-shadow: 2px 2px 3px 1px #666; */
+  font-size: 28px;
+}
 
 /*
 /*************************
@@ -95,7 +110,7 @@ button{
   display: inline-block;
   height: 60px;
   width: 200px;
-  font-size: 20px;
+  font-size: 28px;
   background: #eaeef1;
   text-decoration: none;
 }
