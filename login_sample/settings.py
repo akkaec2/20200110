@@ -78,54 +78,54 @@ WSGI_APPLICATION = 'login_sample.wsgi.application'
 DATABASES = {
     'default': {
         # SQLite version
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-        #PostgreSQL version 2019/11/29
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',#最後の「.」以下は「postgresql」でもおそらくよいが，今回はドライブで「psycopg2」を使用しているので「postgre_psycopg2」とした
-        'NAME': 'pail_trace',
-        'USER': 'aeckenzai2',
-        'PASSWORD': 'aeckenzai2',
-        'HOST': '127.0.0.1',
-        'PORT': '5432', 
+        # #PostgreSQL version 2019/11/29
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',#最後の「.」以下は「postgresql」でもおそらくよいが，今回はドライブで「psycopg2」を使用しているので「postgre_psycopg2」とした
+        # 'NAME': 'pail_trace',
+        # 'USER': 'aeckenzai2',
+        # 'PASSWORD': 'aeckenzai2',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5432', 
 
     }
 }
 
 LOGGING = {
-    'version': 1,   # これを設定しないと怒られる
-    'formatters': { # 出力フォーマットを文字列形式で指定する
-        'all': {    # 出力フォーマットに`all`という名前をつける
-            'format': '\t'.join([
-                "[%(levelname)s]",
-                "asctime:%(asctime)s",
-                "module:%(module)s",
-                "message:%(message)s",
-                "process:%(process)d",
-                "thread:%(thread)d",
-            ])
-        },
-    },
-    'handlers': {  # ログをどこに出すかの設定
-        'file': {  # どこに出すかの設定に名前をつける `file`という名前をつけている
-            'level': 'DEBUG',  # DEBUG以上のログを取り扱うという意味
-            'class': 'logging.FileHandler',  # ログを出力するためのクラスを指定
-            'filename': os.path.join(BASE_DIR, 'django.log'),  # どこに出すか
-            'formatter': 'all',  # どの出力フォーマットで出すかを名前で指定
-        },
-        'console': { # どこに出すかの設定をもう一つ、こちらの設定には`console`という名前
-            'level': 'DEBUG',
-            # こちらは標準出力に出してくれるクラスを指定
-            'class': 'logging.StreamHandler', 
-            'formatter': 'all'
-        },
-    },
-    'loggers': {  # どんなloggerがあるかを設定する
-        'command': {  # commandという名前のloggerを定義
-            'handlers': ['file', 'console'],  # 先述のfile, consoleの設定で出力
-            'level': 'DEBUG',
-        },
-    },
+    # 'version': 1,   # これを設定しないと怒られる
+    # 'formatters': { # 出力フォーマットを文字列形式で指定する
+    #     'all': {    # 出力フォーマットに`all`という名前をつける
+    #         'format': '\t'.join([
+    #             "[%(levelname)s]",
+    #             "asctime:%(asctime)s",
+    #             "module:%(module)s",
+    #             "message:%(message)s",
+    #             "process:%(process)d",
+    #             "thread:%(thread)d",
+    #         ])
+    #     },
+    # },
+    # 'handlers': {  # ログをどこに出すかの設定
+    #     'file': {  # どこに出すかの設定に名前をつける `file`という名前をつけている
+    #         'level': 'DEBUG',  # DEBUG以上のログを取り扱うという意味
+    #         'class': 'logging.FileHandler',  # ログを出力するためのクラスを指定
+    #         'filename': os.path.join(BASE_DIR, 'django.log'),  # どこに出すか
+    #         'formatter': 'all',  # どの出力フォーマットで出すかを名前で指定
+    #     },
+    #     'console': { # どこに出すかの設定をもう一つ、こちらの設定には`console`という名前
+    #         'level': 'DEBUG',
+    #         # こちらは標準出力に出してくれるクラスを指定
+    #         'class': 'logging.StreamHandler', 
+    #         'formatter': 'all'
+    #     },
+    # },
+    # 'loggers': {  # どんなloggerがあるかを設定する
+    #     'command': {  # commandという名前のloggerを定義
+    #         'handlers': ['file', 'console'],  # 先述のfile, consoleの設定で出力
+    #         'level': 'DEBUG',
+    #     },
+    # },
 }
 
 
