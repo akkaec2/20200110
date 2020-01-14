@@ -27,7 +27,7 @@
       <option value="中">中</option>
       <option value="上">上</option>
     </select>
-    <table id="table2" border="1" align="center"><br>
+    <table id="table3" border="1" align="center"><br>
         <br>
         <tr>
             <!-- <th>No</th> -->
@@ -94,7 +94,7 @@
     /********************************
     * csv読み込み
     **********************************/
-    var table = document.getElementById('table2');  //表のオブジェクトを取得
+    var table = document.getElementById('table3');  //表のオブジェクトを取得
     var form = document.getElementById("csvget");
     form.addEventListener('change',function(evt){
         var file = evt.target.files[0];
@@ -143,7 +143,7 @@
         var cross_section = select_flag.options[cro].value;
         // var cross_section = document.getElementById('cross_section').value;    //連番
         // var getname = document.getElementById('text2').value;      //受入者
-        var table       = document.getElementById('table2');  //表のオブジェクトを取得
+        var table       = document.getElementById('table3');  //表のオブジェクトを取得
         var cells       = new Array();
         // td内のtrをループ。rowsコレクションで,行位置取得。
         for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){ //11は列の数，これは変更する可能性あり
@@ -238,7 +238,7 @@
     **********************************/
     function handleDownload() {
         var bom_end = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
-        var table = document.getElementById('table2');  //id=table2という要素を取得
+        var table = document.getElementById('table3');  //id=table2という要素を取得
         var data_csv_end = "";                            //ここに文字データとして値を格納していく　終わったもの
         var cells = new Array();
         // td内のtrをループ。rowsコレクションで,行位置取得。
