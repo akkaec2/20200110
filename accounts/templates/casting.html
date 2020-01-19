@@ -152,8 +152,9 @@
         }
 
         var pailnum_position = cells.indexOf(serial_num); //配列の中のpailnumの数値がある配列位置を取得
-        //杭番号があれば
+        //連番があれば
         if(pailnum_position > -1){
+
             //エラー出力
             if(!(pail_num)){
                 alert('杭番号を入力してください')
@@ -162,12 +163,34 @@
             else{
                 //初めての読取りの場合(時間が入力されていなければ)
                 if(!(table.rows[pailnum_position + 1].cells[4].innerHTML)){
-                    table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num
-                    table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section
-                    table.rows[pailnum_position + 1].cells[4].innerHTML = nowtime_table();
-                    document.getElementById('serial_num').value = "";
-                    document.getElementById('cross_section').value = "";
-                    document.getElementById('serial_num').focus();
+                    console.log(table.rows.length);
+                    for(var i = 1; i < table.rows.length; i++){
+                        if(table.rows[i].cells[2].innerHTML == pail_num){
+                            console.log(i);
+                            if(table.rows[i].cells[3].innerHTML == cross_section){
+                                console.log(i);
+                                alert('【入力情報】\n連番：' + serial_num + '\n杭番号：' + pail_num +
+                                '\n断面：' + cross_section + '\n入力した杭番号と断面は登録されています');
+                                var flag = 1;
+                            }
+                        }
+                        // console.log(i);
+                        // console.log(table.rows[i].cells[2]);
+                    }
+                    if(flag == 1){
+                        document.getElementById('serial_num').value = "";
+                        document.getElementById('cross_section').value = "";
+                        document.getElementById('serial_num').focus();
+                    }
+                    else{
+                        table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num
+                        table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section
+                        table.rows[pailnum_position + 1].cells[4].innerHTML = nowtime_table();
+                        document.getElementById('serial_num').value = "";
+                        document.getElementById('cross_section').value = "";
+                        document.getElementById('serial_num').focus();                        
+                    }
+
                 }
                 //二度目の読取りの場合
                 else{

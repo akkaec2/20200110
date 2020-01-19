@@ -140,7 +140,7 @@
                         cells.push(table.rows[i].cells[1].innerHTML);
                      }
                      var pailnum_position = cells.indexOf(pailnum); //配列の中のpailnumの数値がある配列位置を取得
-                    //杭番号があれば
+                    //連番があれば
                     if(pailnum_position > -1){
                          //初めての読取りの場合(時間が入力されていなければ)
                          if(!(table.rows[pailnum_position + 1].cells[4].innerHTML)){
@@ -155,20 +155,20 @@
                         }
                      }
                      else{
-                         alert('納品した杭番号は出荷実績に含まれていません');
+                         alert('読込んだ杭は納品されていません');
                          document.getElementById('text').value = "";
                          document.getElementById('text').focus();
                      }
                       //照合結果出力
-                     //出荷実績と通し番号が同じならば照合完了と出力
+                     //出荷実績と連番が同じなら時間を出力
                      if(table.rows[pailnum_position + 1].cells[1].innerHTML == pailnum_save){
-                        var now = new Date();
-                        var Year = now.getFullYear();
+                        var now　 = new Date();
+                        var Year　= now.getFullYear();
                         var Month = now.getMonth()+1;
-                        var date = now.getDate();
-                        var Hour = now.getHours();
-                        var Min = now.getMinutes();
-                        var Sec = now.getSeconds();
+                        var date  = now.getDate();
+                        var Hour  = now.getHours();
+                        var Min   = now.getMinutes();
+                        var Sec   = now.getSeconds();
                         table.rows[pailnum_position + 1].cells[4].innerHTML = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;
                         document.getElementById('text').value = "";
                         document.getElementById('text').focus();
