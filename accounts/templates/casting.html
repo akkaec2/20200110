@@ -21,12 +21,15 @@
     <input type="text" class="pail_num" id="pail_num" name="pail_num">
     &emsp;
     <label>断面</label>
-    <select class="cross_section" id="cross_section" name="cross_section" onchange="GetValue(this)"><br>
+    <select class="cross_section" id="cross_section" name="cross_section"><br>
+    <!-- <select class="cross_section" id="cross_section" name="cross_section" onchange="GetValue(this)"><br> -->
       <option value=""></option>
       <option value="下">下</option>
       <option value="中">中</option>
       <option value="上">上</option>
     </select>
+    &emsp;
+    <button class = "button1" type = "button1" onclick="GetValue()">決定</button> 
     <table id="table3" border="1" align="center"><br>
         <br>
         <tr>
@@ -136,12 +139,13 @@
     /********************************
         * テキスト値取得，貼付け
     **********************************/
-    function GetValue(select_flag){
+    // function GetValue(select_flag){
+    function GetValue(){
         var serial_num    = document.getElementById('serial_num').value;    //連番
-        var pail_num      = document.getElementById('pail_num').value;    //連番
-        var cro           = select_flag.selectedIndex;
-        var cross_section = select_flag.options[cro].value;
-        // var cross_section = document.getElementById('cross_section').value;    //連番
+        var pail_num      = document.getElementById('pail_num').value;    　//連番
+        var cross_section = document.getElementById("cross_section").value; //断面
+        // var cro           = select_flag.selectedIndex;
+        // var cross_section = select_flag.options[cro].value;
         // var getname = document.getElementById('text2').value;      //受入者
         var table       = document.getElementById('table3');  //表のオブジェクトを取得
         var cells       = new Array();
