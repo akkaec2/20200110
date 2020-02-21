@@ -4,12 +4,30 @@ body{
   /*  英数字はHelvetica、日本語は游ゴシックが適用される。 */
   font-family: Helvetica , "游ゴシック", sans-serif;
 }
-.head{
+.header{
+  position:fixed; 
+  top:0;
+  left:0;
+  margin: auto;
+  padding: 10px;
+  z-index: 1;
+  /* position: relative; */
+  width: 99%;
+  height: 80px;
+  align-items: center;
+  background-color: #fff;
+  /* background-color: blue; */
+}
+.header_sub{
+  position: relative;
+  /* background-color: red; */
+}
+/* .head{
   position: relative;
   height: 80px;
   align-items: center;
-  /* background-color: rgb(211, 240, 253); */
-}
+} */
+
 /* 旭化成建材のロゴ */
 .head-left{
   position:absolute; 
@@ -29,23 +47,6 @@ body{
   left :470px;
   top:25px;
 }
-
-/* ログアウトボタン */
-/* .logout {
-  position:absolute;
-  display: inline-block;
-  text-decoration: none;
-  color: #0a2fff;
-  width: 80px;
-  height: 80px;
-  line-height: 85px;
-  text-align: center;
-  overflow: hidden;
-  right : 0px;
-  background-color: #b7e3ff;
-  border: solid 2px #0000FF;
-  border-radius: 3px;
-} */
 
 /* ログアウトアイコン　ベース */
 .logout {
@@ -82,36 +83,4 @@ body{
   width:5px; 
   background:#fff;
   border-radius:30px;
-}
-/* .door:after{
-  content:''; 
-  display:block; 
-  position:absolute; 
-  top:19px; 
-  left:22px;
-  height:23px; 
-  width:6px; 
-  background:#fff; 
-  border-radius:10px;
-  transform:rotate(-45deg);
-  -webkit-transform:rotate(-45deg);
-  -o-transform:rotate(-45deg);
-} */
-
-
-/* --------------------------------- */
-/*使用していないもの
-/* --------------------------------- */
-.logout1 {
-  text-align: right;/*文章を右寄せする */
-  float: right;   
-  font-size: 20px;
-  color:#fff;
-}
-.login_name1 {
-  font-size: 20px;
-  text-align: left;  /* 文章を左寄せする(※) */
-  float: left;     /* 左端に寄せて、後続を右側へ回り込ませる */
-  align-items: center;
-  color: #fff;
 }

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}打設{% endblock title %}
 {% block content %}
@@ -18,7 +19,7 @@
     <input type="number" class="pail_num" id="pail_num" name="pail_num">
     &emsp;
     <label >連番:</label>
-    <input type="number" class="serial_num" id="serial_num" name="serial_num">
+    <input type="text" class="serial_num" id="serial_num" name="serial_num">
     &emsp;
     <label>断面</label>
     <select class="cross_section" id="cross_section" name="cross_section"><br>
@@ -47,6 +48,11 @@
         </tr>
     </table><br>
     <button class = "button1" type = "button1" download="杭照合結果.csv" onclick="handleDownload()">登録</button>
+
+    <audio src="{% static 'bgm/ok.mp3' %}" id="ok" type="audio/mp3"></audio>
+    <audio src="{% static 'bgm/ng.mp3' %}" id="ng" type="audio/mp3"></audio>
+    <audio src="{% static 'bgm/update.mp3' %}" id="update" type="audio/mp3"></audio>
+    <audio src="{% static 'bgm/cancel.mp3' %}" id="cancel" type="audio/mp3"></audio>
 
     <!-- javascriptのコード↓ -->
     <script type = "text/javascript" > 
@@ -142,7 +148,7 @@
     // function GetValue(select_flag){
     function GetValue(){
         var serial_num    = document.getElementById('serial_num').value;    //連番
-        var pail_num      = document.getElementById('pail_num').value;    　//連番
+        var pail_num      = document.getElementById('pail_num').value;    　//杭番号
         var cross_section = document.getElementById("cross_section").value; //断面
         // var cro           = select_flag.selectedIndex;
         // var cross_section = select_flag.options[cro].value;
@@ -155,15 +161,24 @@
             cells.push(table.rows[i].cells[0].innerHTML);
         }
 
-        var pailnum_position = cells.indexOf(serial_num); //配列の中のpailnumの数値がある配列位置を取得
+        var pailnum_position = cells.indexOf(serial_num); //配列の中のserial_numの数値がある配列位置を取得
         //連番があれば
         if(pailnum_position > -1){
-
             //エラー出力
             if(!(pail_num)){
+                var sounds = document.getElementById('ng');
+                sounds.play();
                 alert('杭番号を入力してください')
                 document.getElementById('cross_section').value = "";
             }
+            else if(!(cross_section)){
+            var sounds = document.getElementById('ng');
+            sounds.play();
+            alert('断面を入力してください');
+            document.getElementById('serial_num').value = "";
+            document.getElementById('cross_section').value = "";
+            document.getElementById('serial_num').focus();
+           }
             else{
                 //初めての読取りの場合(時間が入力されていなければ)
                 if(!(table.rows[pailnum_position + 1].cells[4].innerHTML)){
@@ -173,6 +188,8 @@
                             console.log(i);
                             if(table.rows[i].cells[3].innerHTML == cross_section){
                                 console.log(i);
+                                var sounds = document.getElementById('ng');
+                                sounds.play();
                                 alert('【入力情報】\n連番：' + serial_num + '\n杭番号：' + pail_num +
                                 '\n断面：' + cross_section + '\n入力した杭番号と断面は登録されています');
                                 var flag = 1;
@@ -187,6 +204,8 @@
                         document.getElementById('serial_num').focus();
                     }
                     else{
+                        var sounds = document.getElementById('ok');
+                        sounds.play(); 
                         table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num
                         table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section
                         table.rows[pailnum_position + 1].cells[4].innerHTML = nowtime_table();
@@ -199,6 +218,8 @@
                 //二度目の読取りの場合
                 else{
                     // alert('既に読み込まれています');
+                    var sounds = document.getElementById('ng');
+                    sounds.play();
                     var result = window.confirm('「' + serial_num + '」' + 'は既に読み込まれています.\n入力済みの内容を上書きしますか.')
                     //修正する場合
                     if(result){
@@ -219,7 +240,8 @@
                             table.rows[pailnum_position + 1].cells[3].style.color = "red";
                             table.rows[pailnum_position + 1].cells[4].style.color = "red";
                         }
-
+                        var sounds = document.getElementById('update');
+                        sounds.play();
                         // table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num;
                         // table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section;
                         // table.rows[pailnum_position + 1].cells[4].innerHTML = nowtime();
@@ -236,6 +258,8 @@
                     }
                     //修正しない場合
                     else{
+                        var sounds = document.getElementById('cancel');
+                        sounds.play();
                         document.getElementById('serial_num').value = "";
                         document.getElementById('cross_section').value = "";
                         document.getElementById('serial_num').focus();
@@ -245,12 +269,17 @@
 
         }
         else if(!(serial_num)){
+            var sounds = document.getElementById('ng');
+            sounds.play();
             alert('杭を読込んでください');
             document.getElementById('serial_num').value = "";
             document.getElementById('cross_section').value = "";
             document.getElementById('serial_num').focus();
         }
+
         else{
+            var sounds = document.getElementById('ng');
+            sounds.play();
             alert('読込んだ杭は納品されていません');
             document.getElementById('serial_num').value = "";
             document.getElementById('cross_section').value = "";

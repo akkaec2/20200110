@@ -6,25 +6,35 @@ body{
 }
 
 main{
-  min-height: 1000vh;
+  min-height: 200vh;
   display: flex;
+  padding:90px 0 10px; 
   margin-top: 5px;
-  
-}
-.main{
-  /* position: relative; */
-  flex: 1;
-  background-color: #eee;
-  margin-left: 5px;
-  text-align: center;
 }
 
 .menu{
   width: 200px;
   /* text-align: center; */
-  background-color: white;
+  background-color: #fff;
   color: #333;
   font-size: 1.2em;  
+}
+
+.menu_sub{
+  position:fixed; 
+  z-index: 1;
+  width: 200px;
+  background-color: #fff;
+  /* background-color: rgb(47, 255, 227); */
+  color: #333;
+  font-size: 1.2em; 
+}
+
+.main{
+  flex: 1;
+  background-color: #eee;
+  margin-left: 5px;
+  text-align: center;
 }
 
 label{
@@ -44,10 +54,6 @@ a.syusei{
   font-size: 30px;
   font-weight:600;
 }
-
-/* input.csvget{
-  font-size: 20px;
-} */
 
 input[type="file"]{
   font-size: 20px;
@@ -94,7 +100,7 @@ select.m_cross_section{
   width:80px;
   height:45px;
 }
-#id_delivery_checker{
+/* #id_delivery_checker{
   font-size: 2.0em;  
   width:140px;
   height:45px;
@@ -110,7 +116,7 @@ select.m_cross_section{
   font-size: 2.0em;  
   width:140px;
   height:45px;
-}
+} */
 
 #id_pail_num{
   font-size: 2.0em;  
@@ -137,6 +143,23 @@ select.m_cross_section{
   height:50px;
 }
 
+#id_start_casting{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+#id_delivery_record{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
+
+#id_obj_name{
+  font-size: 2.0em;  
+  width:170px;
+  height:45px;
+}
 /* input.delivery_checker{
   font-size: 1.0em;  
   width:140px;

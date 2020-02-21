@@ -10,45 +10,50 @@
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
 </head>
 <html lang="ja">
-  <header class="head">
-    <span class="head-left">
-      <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
-    </span>
-    <a class = "login_name">Login:{{ user.username }} さん</a>
-    <a class = "logout" href="{% url 'logout' %}">
-      <span class="btn-logout-icon door"></span><br>
-      ログアウト
-    </a>
+  <header class="header">
+    <div class="header_sub">
+      <span class="head-left">
+        <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
+      </span>
+      <a class = "login_name">Login:{{ user.username }} さん</a>
+      <!-- <a class = "obj_name">物件ID:{{ object_name }} </a> -->
+      <a class = "logout" href="{% url 'logout' %}">
+        <span class="btn-logout-icon door"></span><br>
+        ログアウト
+      </a>
+    </div>
   </header>
   <body>
     <main>
       <div class="menu">
-        <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
-              <span class="btn-social-flat-icon1">
-                <span class="btn-social-flat-icon-paper icon1"></span>
-              </span>
-              納品確認
-        </a><br>
-        <!-- <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
-              <span class="btn-social-flat-icon">
-                <span class="btn-social-flat-icon-light icon2"></span>
-              </span>
-              材料検査
-            </a><br> -->
-        <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
-                <span class="btn-social-flat-icon">
-                  <span class="btn-social-flat-icon-point icon3"></span>
+        <div class="menu_sub">
+          <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
+                <span class="btn-social-flat-icon1">
+                  <span class="btn-social-flat-icon-paper icon1"></span>
                 </span>
-                打設
-            </a><br>
-        <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
+                納品確認
+          </a><br>
+          <!-- <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
                 <span class="btn-social-flat-icon">
-                  <span class="btn-social-flat-icon-clock">
-                    <span class="icon4"></span>
+                  <span class="btn-social-flat-icon-light icon2"></span>
+                </span>
+                材料検査
+              </a><br> -->
+          <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
+                  <span class="btn-social-flat-icon">
+                    <span class="btn-social-flat-icon-point icon3"></span>
                   </span>
-                </span>
-                進捗管理
-        </a><br>
+                  打設
+              </a><br>
+          <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
+                  <span class="btn-social-flat-icon">
+                    <span class="btn-social-flat-icon-clock">
+                      <span class="icon4"></span>
+                    </span>
+                  </span>
+                  進捗管理
+          </a><br>
+        </div>
       </div>
       <div class="main">
           {% block content %}

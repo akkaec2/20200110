@@ -1,8 +1,6 @@
 /* 杭照合用 */
 #table1{
-  /* width: 30%; */
   width: 50%;
-
 }
 #table1 th{
   height: 40px;
@@ -304,24 +302,4 @@ button.button1{
 *メニューボタン作成 end
 **************************/
 
-
-/* --------------------------------- */
-/*使用していないもの
-/* --------------------------------- */
-
-.icon:hover{
-  opacity: 0.8;
-}
-
-
-.buttnmenu{
-  width: 200px;
-  color: #333;/* æ–‡å­—è‰²ã‚’é»’ã«æŒ‡å®š */
-  /* font-size: 1.0em; */
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #f7f7f7;
-  border-left: solid 6px #ff7c5c;/*左線*/
-  font-weight: bold;
 }
