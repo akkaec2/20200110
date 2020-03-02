@@ -20,7 +20,7 @@
     </form> -->
     <!-- <label class="operator-label">納品者:</label>
     <input class="inpt" type="text" id="text2" name="text" size="20" ><br> -->
-    <label >連番:</label>
+    <label >連番</label>
     <input type="text" class="serial_num" id="serial_num" name="serial_num" onchange="GetValue()"><br>
     <table id="table1" border="1" align="center"><br>
         <br>
@@ -33,9 +33,14 @@
     </table><br>
     <button class = "button1" type = "button1" download="杭照合結果.csv" onclick="handleDownload()">登録</button>
 
-    <audio src="{% static 'bgm/ok.mp3' %}" id="ok" type="audio/mp3"></audio>
-    <audio src="{% static 'bgm/ng.mp3' %}" id="ng" type="audio/mp3"></audio>
+    <!-- *********************************************************************
+    * safariで音がならなかったので■の内容に変更した20200221
+    ************************************************************************* -->
+    <!-- <audio src="{% static 'bgm/ok.mp3' %}" id="ok" type="audio/mp3"></audio>
+    <audio src="{% static 'bgm/ng.mp3' %}" id="ng" type="audio/mp3"></audio> -->
 
+    <!-- ■ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
     <script type = "text/javascript" > 
     /******************************************************
     * 適宜必要があれば"javascriptの奴ら"フォルダから持ってくる
@@ -119,8 +124,10 @@
             if(serial_num == cells[base]){
                 var row_num = table.rows.length;
                 table.deleteRow(row_num - 1);
-                var sounds = document.getElementById('ng');
-                sounds.play();
+                var sound = new Howl({ src: ['/static/bgm/ng.mp3'] })
+                sound.play()
+                // var sounds = document.getElementById('ng');
+                // sounds.play();
                 alert('既に読み込まれています');
                 // console.log(table);
                 check = 1;
@@ -128,8 +135,10 @@
         }
         // まだ読込まれていないとき
         if(check == 0){
-            var sounds = document.getElementById('ok');
-            sounds.play(); 
+            var sound = new Howl({ src: ['/static/bgm/ok.mp3'] })
+            sound.play()
+            // var sounds = document.getElementById('ok');
+            // sounds.play(); 
         }
 
         document.getElementById('serial_num').value = "";
