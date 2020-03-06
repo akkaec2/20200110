@@ -1,604 +1,213 @@
-<!DOCTYPE html> 
+{% extends "base.html" %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>メイン操作画面</title>
-    <link rel="stylesheet" href="{% static 'css/operate.css' %}">
-    <link rel="stylesheet" href="{% static 'css/head.css' %}">
-    <link rel="stylesheet" href="{% static 'css/table.css' %}">
-</head>
-<html lang="ja">      
 
-    <body>
-        <header class="head">
-            <span class="head-left">
-                <img src="https://www.asahikasei-kenzai.com/assets/img/header_logo.png" alt="AsahiKASEI 旭化成建材株式会社">
-            </span>
-            <a class = "login_name">Login:{{ user.username }} さん</a>
-            <a class = "logout" href="{% url 'logout' %}">
-                <span class="btn-logout-icon door"></span><br>
-                ログアウト
-            </a>
-        </header>
-        <main>
-            <div class="menu">
-                <br><a class = "btn-social-flat" href = "{% url 'collation' %}" target="_self">
-                        <span class="btn-social-flat-icon1">
-                            <span class="btn-social-flat-icon-paper icon1"></span>
-                        </span>
-                        納品確認
-                    </a><br>
-                <br><a class = "btn-social-flat" href = "{% url 'confirm' %}" target="_self">
-                        <span class="btn-social-flat-icon">
-                            <span class="btn-social-flat-icon-light icon2"></span>
-                        </span>
-                        材料検査
-                    </a><br>
-                <br><a class = "btn-social-flat" href = "{% url 'casting' %}" target="_self">
-                        <span class="btn-social-flat-icon">
-                            <span class="btn-social-flat-icon-point icon3"></span>
-                        </span>
-                        杭番号+杭
-                    </a><br>
-                <br><a class = "btn-social-flat" href = "{% url 'management' %}" target="_self">
-                    <span class="btn-social-flat-icon">
-                        <span class="btn-social-flat-icon-clock">
-                            <span class="icon4"></span>
-                        </span>
-                    </span>
-                        進捗管理
-                </a><br>
-             </div>
-            <div class="main">
-                <br><a class="title">材料検査</a>
-                
-                <!-- Pythonでできることを確かめるためにいったん保留 -->
-                
-                <!-- <form class="myform" name="myform">
-                    <br><input name="csvget" id="csvget" type="file" ><br><br>
-                </form>
-                <label>検査者:</label>
-                <input class="inpt" type="text" id="text2" name="text" size="20" ><br>
-                <label>連番:</label>
-                <input class="inpt" type="text" id="text" name="text" size="20" onchange="GetValue()"><br><br>
-                <table id = "table2" border="1" align="center" >
-                    <br>
-                    <tr>
-                        <th>No</th>
-                        <th>出荷実績</th>
-                        <th>納品実績</th>
-                        <th>納品者</th>
-                        <th>材料検査</th>
-                        <th>検査者</th>
-                    </tr>
-                </table><br> -->
-                <!-- <--//ダウンロード名は物件番号に変更する★-->
-                <!-- <button type = "button" download="杭照合結果.csv" onclick="handleDownload()">登録</button> -->
-                 <!-- ********************************
-                 * javascript code↓
-                 ********************************** -->
-                <script type = "text/javascript" > 
-                /*********
-                *csvファイル選択ver
-                **********/
-                var table = document.getElementById('table2');  //表のオブジェクトを取得
-                var form = document.getElementById("csvget");
-                form.addEventListener('change',function(evt){
-                    var file = evt.target.files[0];
-                    //FileReaderのインスタンスを作成する
-                    var reader = new FileReader();
-                    // ファイル読み取りに失敗したとき
-                    reader.onerror = function() {
-                        alert('ファイル読み取りに失敗しました');
-                    }
-                    //テキスト形式で読み込む
-                    reader.readAsText(file);
-                    var data = new Array();
-                    var rows =[];
-                    //読込終了後の処理
-                    reader.addEventListener( 'load', function(){
-                        // 行単位で配列にする
-                        var rowArr = reader.result.split('\n');
-                        for(var i = 0; i < rowArr.length - 1; i++){
-                            data[i] =  rowArr[i].split(',');
-                        }
-                        for(var j = 0; j < rowArr.length - 1 ; j++){
-                            rows.push(table.insertRow(-1));
-                            //列は見出しの数※受入検査は6個
-                            for(var k = 0; k < 6; k ++){       //k < data[0].length
-                                cell = rows[j].insertCell(-1);
-                                // if(!(data[j][k])){
-                                //     cell.appendChild(document.createTextNode("")); 
-                                // }
-                                // else{
-                                //     cell.appendChild(document.createTextNode(data[j][k])); 
-                                // }
-                                if(!(data[j][k])){
-                                    cell.innerHTML = "";
-                                }
-                                else{
-                                    cell.innerHTML = data[j][k]; 
-                                }
-                            }
-                        }
-                    })
-                    document.getElementById('text2').focus();
-                },false);
-               
-                /********************************
-                 * テキスト値取得，貼付け
-                **********************************/
-                function GetValue(){
-                     var pailnum = document.getElementById('text').value;       //杭番号（注番）
-                     var getname = document.getElementById('text2').value;      //受入者
-                    //  document.getElementById("textout").value = pailnum;
-                     var table = document.getElementById('table2');  //表のオブジェクトを取得
-                     var cells = new Array();
-                     // td内のtrをループ。rowsコレクションで,行位置取得。
-                     for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){ //11は列の数，これは変更する可能性あり
-                        //i行目の1列目のセルの値を取得(出荷実績)
-                        cells.push(table.rows[i].cells[1].innerHTML);
-                     }
-                     var pailnum_position = cells.indexOf(pailnum); //配列の中のpailnumの数値がある配列位置を取得
-                    //連番があれば
-                    if(pailnum_position > -1){
-                         //初めての読取りの場合(時間が入力されていなければ)
-                         if(!(table.rows[pailnum_position + 1].cells[4].innerHTML)){
-                            //  table.rows[pailnum_position + 1].cells[2].innerHTML = pailnum; //「通し番号」に杭番号出力
-                            var pailnum_save = pailnum;//「注番」保存
-                         }
-                         //二度目の読取りの場合
-                        else{
-                            alert('既に読み込まれています');
-                            document.getElementById('text').value = "";
-                            document.getElementById('text').focus();
-                        }
-                     }
-                     else{
-                         alert('読込んだ杭は納品されていません');
-                         document.getElementById('text').value = "";
-                         document.getElementById('text').focus();
-                     }
-                      //照合結果出力
-                     //出荷実績と連番が同じなら時間を出力
-                     if(table.rows[pailnum_position + 1].cells[1].innerHTML == pailnum_save){
-                        var now　 = new Date();
-                        var Year　= now.getFullYear();
-                        var Month = now.getMonth()+1;
-                        var date  = now.getDate();
-                        var Hour  = now.getHours();
-                        var Min   = now.getMinutes();
-                        var Sec   = now.getSeconds();
-                        table.rows[pailnum_position + 1].cells[4].innerHTML = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;
-                        document.getElementById('text').value = "";
-                        document.getElementById('text').focus();
-                        table.rows[pailnum_position + 1].cells[5].innerHTML = document.getElementById('text2').value
-                     }  
-                 }
-               
-                /********************************
-                 * csvダウンロード(着手)
-                 **********************************/
-                function handleDownload() {
-                    var bom_end = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
-                    var table = document.getElementById('table2');//id=table2という要素を取得
-                    var data_csv_end = "";                            //ここに文字データとして値を格納していく　終わったもの
-                    var cells = new Array();
-                     // td内のtrをループ。rowsコレクションで,行位置取得。
-                     for(var i = 1; i < table.rows.length; i++){ 
-                        // if(!(table.rows[i].cells[4].innerHTML)){　  //途中のもの
-                        //     continue;
-                        // }
-                        // else{                                       //終わったもの
-                        //     //i行目の1列目のセルの値を取得(出荷実績)
-                        //     cells.push(table.rows[i].cells[1].innerHTML);
-                        // }
-                        //i行目の1列目のセルの値を取得(出荷実績)
-                        cells.push(table.rows[i].cells[1].innerHTML);
-                     }
-                    /********************************
-                    一番上に見出しを付けて次に値の出力
-                    ********************************/
-                    // ===============================================================
-                    // 見出しを付けてしまってはcsvで合体させるときに邪魔になるから排除する
-                    // ===============================================================
-                    // for(var i = 0;  i < 1; i++){
-                    //     for(var j = 0; j < table.rows[i].cells.length; j++){
-                    //         data_csv += table.rows[i].cells[j].innerHTML;//HTML中の表のセル値をdata_csvに格納
-                    //         if(j == table.rows[i].cells.length-1) data_csv += "\n";//行終わりに改行コードを追加
-                    //         else data_csv += ",";//セル値の区切り文字として,を追加
-                    //     }
-                    // }
-                    for(var i=1; i < table.rows.length; i++){
-                        // //途中のもの
-                        // if(!(table.rows[i].cells[4].innerHTML)){
-                        //     continue;
-                        // }
-                        // //終わったもの
-                        // else{
-                        //     data_csv_end += i;
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += table.rows[i].cells[1].innerHTML; //出荷実績
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += table.rows[i].cells[2].innerHTML; //照合結果
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += table.rows[i].cells[3].innerHTML; //受入者
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += table.rows[i].cells[4].innerHTML; //受入検査
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += table.rows[i].cells[5].innerHTML; //検査者
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += ""; //打設位置
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += ""; //断面
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += ""; //打設完了
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += ""; //打設完了時間
-                        //     data_csv_end += ",";//セル値の区切り文字として,を追加
-                        //     data_csv_end += ""; //打設者
-                        //     data_csv_end += "\n";//行終わりに改行コードを追加
-                        // }
-                        data_csv_end += i;
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += table.rows[i].cells[1].innerHTML; //出荷実績
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += table.rows[i].cells[2].innerHTML; //照合結果
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += table.rows[i].cells[3].innerHTML; //受入者
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += table.rows[i].cells[4].innerHTML; //受入検査
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += table.rows[i].cells[5].innerHTML; //検査者
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += ""; //打設位置
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += ""; //断面
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += ""; //打設完了
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += ""; //打設完了時間
-                        data_csv_end += ",";//セル値の区切り文字として,を追加
-                        data_csv_end += ""; //打設者
-                        data_csv_end += "\n";//行終わりに改行コードを追加
-                    }
-                    // var now = new Date();
-                    // var Year = now.getFullYear();
-                    // var Month = now.getMonth()+1;
-                    // var date = now.getDate();
-                    // var Hour = now.getHours();
-                    // var Min = now.getMinutes();
-                    // var Sec = now.getSeconds();
-                    // var filename = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec;
-                    //*******************************
-                    //★終わったもの★
-                    var blob_end = new Blob([ bom_end, data_csv_end], { "type" : "text/csv" });//data_csv_endのデータをcsvとしてダウンロードする関数
-                    //★ハイパーリンク
-                    // if (window.navigator.msSaveBlob) { //IEの場合の処理
-                    //     // window.navigator.msSaveBlob(blob, filename+".csv"); 
-                    //     window.navigator.msSaveBlob(blob_end, "打設位置_" + cells + ".csv"); 
-                    //     //window.navigator.msSaveOrOpenBlob(blob, "test.csv");// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-                    // } 
-                    // else {
-                    //     document.getElementById("download").href = window.URL.createObjectURL(blob_end);
-                    //     // document.getElementById("download").download = filename+".csv";
-                    //     document.getElementById("download").download = "打設位置_" + cells + ".csv";
-                    // }
-                    // delete data_csv_end;//data_csv_endオブジェクトはもういらないので消去してメモリを開放
+{% block title %}材料検査{% endblock title %}
+{% block content %}
+    <h1>材料検査</h1><br>
+    <!-- Pythonでできることを確かめるためにいったん保留 -->
+    
+    <form class="myform" name="myform">
+        <br><input name="csvget" id="csvget" type="file" ><br><br>
+    </form>
+    <label>連番</label>
+    <input type="text" class="serial_num" id="serial_num" name="serial_num" onchange="GetValue()"><br>
+    <table id = "table2" border="1" align="center" >
+        <br>
+        <tr>
+            <th>連番</th>
+            <th>納品時間</th>
+            <th>材料検査</th>
+        </tr>
+    </table><br> 
+    <button class = "button1" type = "button1" download="杭照合結果.csv" onclick="handleDownload()">登録</button>
 
-                    //★ボタン
-                    let link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob_end);
-                    link.download =  "杭番号_" + cells + ".csv";
-                    link.click();
-                    delete data_csv_end;//data_csv_endオブジェクトはもういらないので消去してメモリを開放
+
+    <!-- ********************************
+    * javascript code↓
+    ********************************** -->
+    <!-- ■ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+    <script type = "text/javascript" > 
+
+
+    /**********************
+    * csvname時間の出力
+    **********************/
+    function nowtime_csv(){
+        var now         = new Date();
+        var Year        = now.getFullYear();
+        var Month       = toDoubleDigits(now.getMonth()+1);
+        var date        = toDoubleDigits(now.getDate());
+        var Hour        = toDoubleDigits(now.getHours());
+        var Min         = toDoubleDigits(now.getMinutes());
+        // var Sec         = toDoubleDigits(now.getSeconds());
+        return Year + "" + Month + "" + date + "_" + Hour + "" + Min; //日時
+    }  
+
+    /**********************
+    * 完了時間の出力(表)
+    **********************/
+    function nowtime_table(){
+        //★完了時間の出力★
+        var now         = new Date();
+        var Year        = now.getFullYear();
+        var Month       = toDoubleDigits(now.getMonth()+1);
+        var date        = toDoubleDigits(now.getDate());
+        var Hour        = toDoubleDigits(now.getHours());
+        var Min         = toDoubleDigits(now.getMinutes());
+        // var Sec         = toDoubleDigits(now.getSeconds());
+        return Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min;         
+    }
+    
+    /********************************
+    * 時間に'0'付け関数
+    **********************************/
+    var toDoubleDigits = function(num) { 
+        num += ""; 
+        if (num.length === 1) { 
+            num = "0" + num; 
+        } 
+        return num;      
+    }; 
+    /********************************
+    * csv読み込み
+    **********************************/
+    var table = document.getElementById('table2');  //表のオブジェクトを取得
+    var form = document.getElementById("csvget");
+    form.addEventListener('change',function(evt){
+        var file = evt.target.files[0];
+        //FileReaderのインスタンスを作成する
+        var reader = new FileReader();
+        // ファイル読み取りに失敗したとき
+        reader.onerror = function() {
+            alert('ファイル読み取りに失敗しました');
+        }
+        //テキスト形式で読み込む
+        reader.readAsText(file);
+        var data = new Array();
+        var rows =[];
+        var pnum = new Array();
+        //読込終了後の処理
+        reader.addEventListener( 'load', function(){
+            // 行単位で配列にする
+            var rowArr = reader.result.split('\n');
+            for(var i = 0; i < rowArr.length - 1; i++){
+                data[i] =  rowArr[i].split(',');
+            }
+            for(var j = 0; j < rowArr.length - 1 ; j++){
+                rows.push(table.insertRow(-1));
+                //列は見出しの数※今回は3個
+                for(var k = 0; k < 3; k ++){　//k < data[0].length
+                    cell = rows[j].insertCell(-1);
+                    if(!(data[j][k])){
+                        cell.innerHTML = "";
+                    }
+                    else{
+                        cell.innerHTML = data[j][k]; 
+                    }
                 }
+            }
+        })
+        document.getElementById('serial_num').focus();
+    },false);
+
+    /********************************
+        * テキスト値取得，貼付け
+    **********************************/
+    // function GetValue(select_flag){
+        function GetValue(){
+        var serial_num    = document.getElementById('serial_num').value;    //連番
+        var table       = document.getElementById('table2');  //表のオブジェクトを取得
+        var cells       = new Array();
+        // td内のtrをループ。rowsコレクションで,行位置取得。
+        for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){ 
+            //i行目の1列目のセルの値を取得(納品杭)
+            cells.push(table.rows[i].cells[0].innerHTML);
+        }
+        var pailnum_position = cells.indexOf(serial_num); //配列の中のserial_numの数値がある配列位置を取得
+        //連番があれば
+        if(pailnum_position > -1){
+            //エラー出力
+            //初めての読取りの場合(材料検査されていなければ)
+            if(!(table.rows[pailnum_position + 1].cells[2].innerHTML)){
+                var sound = new Howl({ src: ['/static/bgm/ok.mp3'] })
+                sound.play()
+                // var sounds = document.getElementById('ok');
+                // sounds.play(); 
+                table.rows[pailnum_position + 1].cells[2].innerHTML = nowtime_table();ｚ
+                document.getElementById('serial_num').value = "";
+                document.getElementById('serial_num').focus();                        
+            }
+            //二度目の読取りの場合
+            else{
+                // alert('既に読み込まれています');
+                var sound = new Howl({ src: ['/static/bgm/ng.mp3'] })
+                sound.play()
+                // var sounds = document.getElementById('ng');
+                // sounds.play();
+                var result = window.confirm('「' + serial_num + '」' + 'は既に読み込まれています.')
+                document.getElementById('serial_num').value = "";
+                document.getElementById('serial_num').focus();
+            }
+        }
+
+        else{
+            var sound = new Howl({ src: ['/static/bgm/ng.mp3'] })
+            sound.play()
+            // var sounds = document.getElementById('ng');
+            // sounds.play();
+            alert('読込んだ杭は納品されていません');
+            document.getElementById('serial_num').value = "";
+            document.getElementById('serial_num').focus();
+        }
+    }
+
+    /********************************
+    * csvダウンロード(着手)
+    **********************************/
+    function handleDownload() {
+        var bom_end = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
+        var table = document.getElementById('table2');  //id=table2という要素を取得
+        var data_csv_end = "";                            //ここに文字データとして値を格納していく　終わったもの
+        var cells = new Array();
+        // td内のtrをループ。rowsコレクションで,行位置取得。
+        for(var i = 1; i < table.rows.length; i++){ 
+            //i行目の1列目のセルの値を取得(出荷実績)
+            cells.push(table.rows[i].cells[1].innerHTML);
+        }
+    /********************************
+    一番上に見出しを付けて次に値の出力
+    ********************************/
+        // ===============================================================
+        // 見出しを付けてしまってはcsvで合体させるときに邪魔になるから排除する
+        // ===============================================================
+        // for(var i = 0;  i < 1; i++){
+        //     for(var j = 0; j < table.rows[i].cells.length; j++){
+        //         data_csv += table.rows[i].cells[j].innerHTML;               //HTML中の表のセル値をdata_csvに格納
+        //         if(j == table.rows[i].cells.length-1) data_csv += "\n";     //行終わりに改行コードを追加
+        //         else data_csv += ",";                                       //セル値の区切り文字として,を追加
+        //     }
+        // }
+        for(var i=1; i < table.rows.length; i++){
+            data_csv_end += table.rows[i].cells[0].innerHTML; //納品杭
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[1].innerHTML; //納品時間
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[2].innerHTML; //材料検査
+            data_csv_end += "\n";//行終わりに改行コードを追加
+        }
+    //*******************************
+        var blob_end = new Blob([ bom_end, data_csv_end], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
+
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob_end);
+        link.download =  "材料検査_" + nowtime_csv() + ".csv";
+        link.click();
+        delete data_csv_end;//data_csvオブジェクトはもういらないので消去してメモリを開放
+    }
 
 
-                // /********************************
-                //  * csvダウンロード(未着手)
-                //  **********************************/
-                //  function Downloadcsvhalfway() {
-                //     var bom_hway = new Uint8Array([0xEF, 0xBB, 0xBF]);    //文字コードをBOM付きUTF-8に指定 終わったもの
-                //     var table = document.getElementById('table2');//id=table2という要素を取得
-                //     var data_csv_hway = "";                            //ここに文字データとして値を格納していく　終わったもの
-                //     var pnumarr = new Array();
-                //      // td内のtrをループ。rowsコレクションで,行位置取得。
-                //      for(var i = 1; i < table.rows.length; i++){ 
-                //         if((table.rows[i].cells[4].innerHTML)){　  //終わったもの
-                //             continue;
-                //         }
-                //         else{                                       //途中のもの
-                //             //i行目の1列目のセルの値を取得(出荷実績)
-                //             pnumarr.push(table.rows[i].cells[1].innerHTML);
-                //         }
-                //      }
-                //     /********************************
-                //     一番上に見出しを付けて次に値の出力
-                //     ********************************/
-                //     for(var i=1; i < table.rows.length; i++){
-                //         //終わったもの
-                //         if((table.rows[i].cells[4].innerHTML)){
-                //             continue;
-                //         }
-                //         //途中のもの
-                //         else{
-                //             data_csv_hway += i;
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += table.rows[i].cells[1].innerHTML; //出荷実績
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += table.rows[i].cells[2].innerHTML; //照合結果
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += table.rows[i].cells[3].innerHTML; //受入者
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += table.rows[i].cells[4].innerHTML; //受入検査
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += table.rows[i].cells[5].innerHTML; //検査者
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += ""; //打設位置
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += ""; //断面
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += ""; //打設完了
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += ""; //打設完了時間
-                //             data_csv_hway += ",";//セル値の区切り文字として,を追加
-                //             data_csv_hway += ""; //打設者
-                //             data_csv_hway += "\n";//行終わりに改行コードを追加
-                //         }
-                //     }
-                //     //*******************************
-                //     //★未着手★
-                //     var blob_hway = new Blob([ bom_hway, data_csv_hway], { "type" : "text/csv" });//data_csv_hwayのデータをcsvとしてダウンロードする関数
-                //     //★ハイパーリンク
-                //     // if (window.navigator.msSaveBlob) { //IEの場合の処理
-                //     //     window.navigator.msSaveBlob(blob_hway, "受入検査_未着手_" + pnumarr + ".csv"); 
-                //     // } 
-                //     // else {
-                //     //     document.getElementById("download_hway").href = window.URL.createObjectURL(blob_hway);
-                //     //     document.getElementById("download_hway").download = "受入検査_未着手_" + pnumarr + ".csv";
-                //     // }
-                //     // delete data_csv_hway;//data_csv_hwayオブジェクトはもういらないので消去してメモリを開放
-
-                //     //★ボタン
-                //     let link = document.createElement('a');
-                //     link.href = window.URL.createObjectURL(blob_hway);
-                //     link.download =  "受入検査_未着手_" + pnumarr + ".csv";
-                //     link.click();
-                //     delete data_csv_hway;//data_csv_endオブジェクトはもういらないので消去してメモリを開放
-
-                // }
-                    /********************************
-                     * csvファイルの取得 自動ファイル選択
-                    **********************************/
-                
-                    // "C:\Users\a1050453\Desktop\sample2\建材csv\施工現場csv入力\杭照合結果.csv"
-                    // const xhr = new XMLHttpRequest();
-                    // console.log("1");
-                    // file = "../../建材csv/施工現場csv入力/杭照合結果.csv"
-                    // console.log("2");
-                    // window.onload = function onLoad() {
-                    //     console.log(file);
-                    //     console.log("3");
-                    //     xhr.open('GET', file, true); // GETでローカルファイルを開く
-                    //     console.log("5");
-                    //     console.log(xhr);
-                    //     console.log("6");
-                    //     var data1 = xhr.responseText;
-                    //     xhr.send();
-                    //     table2 = document.getElementById("tableid");
-                    //     table2.innerHTML = data1;
-                        
-                    //     xhr.onload = () => {
-                    //         console.log("6");
-                    //         var file = evt.target.files[0];
-                    //         //FileReaderのインスタンスを作成する
-                    //         var reader = new FileReader();
-                    //         // ファイル読み取りに失敗したとき
-                    //         reader.onerror = function() {
-                    //             alert('ファイル読み取りに失敗しました');
-                    //         }
-                    //         //テキスト形式で読み込む
-                    //         reader.readAsText(file);
-
-                    //         var data = new Array();
-                    //         var rows =[];
-                    //         //読込終了後の処理
-                    //         reader.addEventListener( 'load', function(){
-                    //             // 行単位で配列にする
-                    //             var rowArr = reader.result.split('\n');
-                    //             for(var i = 0; i < rowArr.length - 1; i++){
-                    //                 data[i] =  rowArr[i].split(',');
-                    //             }
-                    //             console.log(rowArr.length);
-                    //             console.log(data.length);
-                    //             console.log(data[0]);
-                    //             console.log(data[1]);
-                    //             console.log(data[2]);
-                    //             console.log(data[3]);
-                    //             console.log(data[4]);
-                    //             console.log(rowArr[0]);
-                    //             console.log(rowArr[1]);
-                    //             console.log(rowArr[2]);
-                    //             console.log(rowArr[3]);
-                    //             console.log(rowArr[4]);
-                    //             console.log(rowArr[0].length);
-                    //             console.log(rowArr[1].length);
-                    //             console.log(rowArr[2].length);
-                    //             console.log(rowArr[3].length);
-                    //             console.log(rowArr[4].length);
-                                
-                    //             for(var j = 0; j < rowArr.length - 1 ; j++){
-                    //                 rows.push(table.insertRow(-1));
-                    //                 //列は見出しの数※今回は11個
-                    //                 for(var k = 0; k < data[0].length; k ++){
-                    //                     cell = rows[j].insertCell(-1);
-
-                    //                     if(!(data[j][k])){
-                    //                         cell.appendChild(document.createTextNode("")); 
-                    //                     }
-                    //                     else{
-                    //                         cell.appendChild(document.createTextNode(data[j][k])); 
-                    //                     }
-                                        
-                    //                     if(j == 0){
-                    //                         cell.style.backgroundColor = "greenyellow"; // ヘッダ行
-                    //                     }
-                                        
-                                    
-                                        
-                    //                 }
-                    //             }
-                    //             // 指定したdiv要素に表を加える
-                    //             document.getElementById("tableid").appendChild(table);
-                            
-                    //             // element.style="border-collapse: collapse"
-                    //             // element.style.border = "solid 1px black"; 
-                    //             // element.style.borderColor = 'red'; 
-                                
-                    //         })
-                    //     }
-                    //     console.log("7");
-                    // }
-                    // console.log("4");
-
-                    
-
-                    // var div = document.getElementById("table");
-                    // var form = document.getElementById("csvget");
-                    // form.addEventListener('change',function(evt){
-                    //     var file = evt.target.files[0];
-                    //     //FileReaderのインスタンスを作成する
-                    //     var reader = new FileReader();
-                    //     // ファイル読み取りに失敗したとき
-                    //     reader.onerror = function() {
-                    //         alert('ファイル読み取りに失敗しました');
-                    //     }
-                    //     //テキスト形式で読み込む
-                    //     reader.readAsText(file);
-                    //     var data = new Array();
-                    //     var rows =[];
-                    //     //読込終了後の処理
-                    //     reader.addEventListener( 'load', function(){
-                    //         // 行単位で配列にする
-                    //         var rowArr = reader.result.split('\n');
-                    //         for(var i = 0; i < rowArr.length - 1; i++){
-                    //             data[i] =  rowArr[i].split(',');
-                    //         }
-                    //         var str = "";
-                    //         str += "<table>"; 
-                    //         for(var j = 0; j < rowArr.length - 1 ; j++){
-                    //             if(j = 0){
-                    //                 str += "<tr>";
-                    //                 for(var k = 0; k < data[0].length; k ++){
-                    //                     str += "<th>";
-                    //                     if(!(data[j][k])){
-                    //                         str += ""; 
-                    //                     }
-                    //                     else{
-                    //                         str += data[j][k]; 
-                    //                     }
-                    //                     str += "</th>";
-                    //                     // if(j == 0){
-                    //                     //     cell.style.backgroundColor = "greenyellow"; // ヘッダ行
-                    //                     // }
-                    //                 }
-                    //                 console.log(str);
-                    //                 str += "</tr>";
-                    //                 break;
-                    //             }
-                                
-                    //             else{
-                    //                 str += "<tr>";
-                    //                 //列は見出しの数※今回は11個
-                    //                 for(var k = 0; k < data[0].length; k ++){
-                    //                     str += "<td>";
-                    //                     if(!(data[j][k])){
-                    //                         str += ""; 
-                    //                     }
-                    //                     else{
-                    //                         str += data[j][k]; 
-                    //                     }
-                    //                     str += "</td>";
-                    //                 }
-                    //                 str += "</tr>";
-                    //             }
-                    //         }
-                    //         str += "</table>"; 
-                    //         div.innerHTML = str;
-                    //     })
-                    // },false);
-                    
-
-// //CSVファイルを読み込む関数getCSV()の定義
-// function getCSV(){
-//     var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
-//     req.open("get","http://10.82.90.69/建材csv/施工現場csv入力/杭照合結果.csv",true);
-//     req.send(null);
-//     req.onload = function(){
-//         convertCSVtoArray(req.responseText);
-//     }
-// }
+    </script>  
 
 
-                // /*********
-                // *csvファイル選択ver
-                // **********/
-                // var table = document.createElement('table');  //表のオブジェクトを取得
-                // table.id = "tableid";                                   // tableidを付け加えないと今後呼び出せない
-                // // var element = document.getElementById("tableid");
-                // var form = document.getElementById("csvget");
-                // form.addEventListener('change',function(evt){
-                //     var file = evt.target.files[0];
-                //     //FileReaderのインスタンスを作成する
-                //     var reader = new FileReader();
-                //     // ファイル読み取りに失敗したとき
-                //     reader.onerror = function() {
-                //         alert('ファイル読み取りに失敗しました');
-                //     }
-                //     //テキスト形式で読み込む
-                //     reader.readAsText(file);
-                //     var data = new Array();
-                //     var rows =[];
-                //     //読込終了後の処理
-                //     reader.addEventListener( 'load', function(){
-                //         // 行単位で配列にする
-                //         var rowArr = reader.result.split('\n');
-                //         for(var i = 0; i < rowArr.length - 1; i++){
-                //             data[i] =  rowArr[i].split(',');
-                //         }
-                //         for(var j = 0; j < rowArr.length - 1 ; j++){
-                //             rows.push(table.insertRow(-1));
-                //             //列は見出しの数※今回は11個
-                //             for(var k = 0; k < data[0].length; k ++){
-                //                 cell = rows[j].insertCell(-1);
-                //                 // if(!(data[j][k])){
-                //                 //     cell.appendChild(document.createTextNode("")); 
-                //                 // }
-                //                 // else{
-                //                 //     cell.appendChild(document.createTextNode(data[j][k])); 
-                //                 // }
-                //                 if(!(data[j][k])){
-                //                     cell.innerHTML = "";
-                //                 }
-                //                 else{
-                //                     cell.innerHTML = data[j][k]; 
-                //                 }
-                //                 if(j == 0){
-                //                     cell.style.backgroundColor = "#91d5ff"; // ヘッダ行
-                //                 }
-                //                 cell.style.border = "solid 1px black"; 
-                //             }
-                //         }
-                //          // 指定したdiv要素に表を加える
-                //         document.getElementById("tabledivid").appendChild(table);
-                //         document.getElementById("tabledivid").style.fontSize = '1.6em';    //table文字大きさ
-                //     })
-                // },false);
-
-
-                </script>  
-            </div>
-        </main>
-    </body>   
-</html> 
+{% endblock content %}

@@ -151,12 +151,11 @@
 			Each object has the following attributes.
 			@property {string} [buttonText='...'] Display text for trigger button.
 			@property {string} [buttonStatus='Open the keypad'] Status text for trigger button.
-			@property {string} [closeText='決定'] Display text for close link.//★Closeから変更20/03/05
+			@property {string} [closeText='Close'] Display text for close link.
 			@property {string} [closeStatus='Close the keypad'] Status text for close link.
-			@property {string} [clearText='全消去'] Display text for clear link.//★Clearから変更20/03/05
+			@property {string} [clearText='Clear'] Display text for clear link.
 			@property {string} [clearStatus='Erase all the text'] Status text for clear link.
-			@property {string} [backText='1字消去'] Display text for back link.//★Backから変更20/03/05
-			@property {string} [backText='⌫'] Display text for back link.//★Backから変更20/03/05
+			@property {string} [backText='Back'] Display text for back link.
 			@property {string} [backStatus='Erase the previous character'] Status text for back link.
 			@property {string} [spacebarText='&#160;'] Display text for space bar.
 			@property {string} [spacebarStatus='Space'] Status text for space bar.
@@ -182,12 +181,11 @@
 			'': { // Default regional settings - English/US
 				buttonText: '...',
 				buttonStatus: 'Open the keypad',
-				closeText: '決定',//★Closeから変更20/03/05
+				closeText: 'Close',
 				closeStatus: 'Close the keypad',
-				clearText: '全消去',//★Clearから変更20/03/05
+				clearText: 'Clear',
 				clearStatus: 'Erase all the text',
-				// backText: '1字消去',//★Backから変更20/03/05
-				backText: '⌫',//★Backから変更20/03/05
+				backText: 'Back',
 				backStatus: 'Erase the previous character',
 				spacebarText: '&#160;',
 				spacebarStatus: 'Space',
@@ -928,8 +926,7 @@
 		@memberof module:Keypad
 		@name numericLayout
 		@example layout: $.keypad.numericLayout */
-	// plugin.numericLayout = ['123' + plugin.CLOSE, '456' + plugin.CLEAR, '789' + plugin.BACK, '0'];//★0のレイアウト変更20/03/05
-	plugin.numericLayout = ['123', '456', '789', '0' + '-' + plugin.BACK];//★0のレイアウト変更20/03/05
+	plugin.numericLayout = ['123' + plugin.CLOSE, '456' + plugin.CLEAR, '789' + plugin.BACK, plugin.SPACE + '0'];
 	/** Standard US keyboard alphabetic layout.
 		For use with the {@linkcode module:Keypad~defaultOptions|layout} option.
 		@memberof module:Keypad

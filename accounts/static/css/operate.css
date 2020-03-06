@@ -6,8 +6,10 @@ body{
 }
 
 main{
-  min-height: 200vh;
+  min-height: calc(100vh - 80px - 20px - 10px - 5px);
+  /* min-height: 200vh; */
   display: flex;
+  flex-direction: row;
   padding:90px 0 10px; 
   margin-top: 5px;
 }
@@ -16,6 +18,7 @@ main{
   width: 200px;
   /* text-align: center; */
   background-color: #fff;
+  /* background-color: red; */
   color: #333;
   font-size: 1.2em;  
 }
@@ -31,10 +34,28 @@ main{
 }
 
 .main{
-  flex: 1;
+  /* display : flex; */
+  flex: auto;
   background-color: #eee;
+  /* background-color: green; */
   margin-left: 5px;
   text-align: center;
+  align-items: center;
+
+}
+
+.collation{
+  position:fixed;  
+  align-items: center;
+  left:calc(50% - 100px/2);
+  background-color: #eee;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+}
+
+.collation_sub{
+  display: inline-block;
 }
 
 label{
@@ -63,6 +84,14 @@ input.serial_num{
   font-size: 2.0em;  
   width:170px;
   height:45px;
+}
+
+#count_num{
+  font-size: 3.5em;  
+  width:60px;
+  height:60px;
+  text-align: center;
+  background-color: #eee;
 }
 
 input.correct_serial_num{

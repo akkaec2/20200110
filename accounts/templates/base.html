@@ -9,14 +9,126 @@
   <link rel="stylesheet" href="{% static 'css/operate.css' %}">
   <link rel="stylesheet" href="{% static 'css/head.css' %}">
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery.keypad.alt.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery.keypad.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/jquery.keypad.alt.css' %}" type = "text/javascript"> -->
+  <!-- <link rel="stylesheet" href="{% static 'css/jquery.keypad.css' %}" type = "text/javascript"> -->
+  <!-- <link rel="stylesheet" href="{% static 'css/jquery.keypad.css' %}" type="text/css" media="all"> -->
   <script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+  <!-- <script type = "text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
   <script type = "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
-  <script type = "text/javascript" src="{% static 'js/jquery.plugin.js' %}"></script> 
-  <script type = "text/javascript" src="{% static 'js/jquery.keypad.js' %}"></script>
+  <script type = "text/javascript" src="../static/js/jquery.plugin.js"></script> 
+  <script type = "text/javascript" src="../static/js/jquery.keypad.js"></script>
+  <!-- <script type = "text/javascript" src="{% static 'js/jquery.plugin.js' %}"></script>  -->
+  <!-- <script type = "text/javascript" src="{% static 'js/jquery.keypad.js' %}"></script> -->
   <!-- <script type = "text/javascript" src="{% static 'js/sample.js' %}"></script> -->
   <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+  <style type="text/css">
+    button.keypad-trigger {
+      width: 25px;
+      padding: 0px;
+    }
+    img.keypad-trigger {
+      margin: 2px;
+      vertical-align: middle;
+    }
+    .keypad-popup, .keypad-inline, .keypad-key, .keypad-special {
+      font-family: Arial,Helvetica,sans-serif;
+      /* font-size: 32px; */
+      font-size: 1.8em;
+    }
+    .keypad-popup {
+      display: none;
+      z-index: 10;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #888;
+      -moz-border-radius: 0.25em;
+      -webkit-border-radius: 0.25em;
+      border-radius: 0.25em;
+    }
+    .keypad-keyentry {
+      display: none;
+    }
+    .keypad-inline {
+      background-color: #fff;
+      border: 1px solid #888;
+      -moz-border-radius: 0.25em;
+      -webkit-border-radius: 0.25em;
+      border-radius: 0.25em;
+    }
+    .keypad-disabled {
+      position: absolute;
+      z-index: 100;
+      background-color: white;
+      opacity: 0.5;
+      filter: alpha(opacity=50);
+    }
+    .keypad-rtl {
+      direction: rtl;
+    }
+    .keypad-prompt {
+      clear: both;
+      text-align: center;
+    }
+    .keypad-prompt.ui-widget-header {
+      margin: 0.125em;
+    }
+    .keypad-row {
+      width: 100%;
+    }
+    .keypad-space {
+      display: inline-block;
+      margin: 0.125em;
+      width: 2em;
+    }
+    .keypad-half-space {
+      display: inline-block;
+      margin: 0.125em 0.0625em;
+      width: 1em;
+    }
+    .keypad-key, .keypad-special {
+      margin: 0.125em;
+      padding: 0em;
+      width: 2em;
+      background-color: #f4f4f4;
+      -moz-border-radius: 0.25em;
+      -webkit-border-radius: 0.25em;
+      border-radius: 0.25em;
+      text-align: center;
+      cursor: pointer;
+    }
+    .keypad-key[disabled] {
+      border: 0.125em outset;
+    }
+    .keypad-key-down {
+    }
+    .keypad-special {
+      width: 2.0em;
+    }
+    .keypad-spacebar {
+      width: 13.25em;
+    }
+    .keypad-tab {
+      width: 2em;
+    }
+    .keypad-clear, .keypad-back, .keypad-close, .keypad-shift {
+      color: #fff;
+      font-weight: bold;
+    }
+    .keypad-clear {
+      background-color: #a00;
+    }
+    .keypad-back {
+      background-color: #00a;
+    }
+    .keypad-close {
+      background-color: #0a0;
+    }
+    .keypad-shift {
+      background-color: #0aa;
+    }
+  </style>
 </head>
 <html lang="ja">
   <header class="header">

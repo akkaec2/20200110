@@ -81,7 +81,8 @@ img.keypad-trigger {
 .keypad-key-down {
 }
 .keypad-special {
-	width: 4.25em;
+	/* width: 4.25em; */
+	width: 2.0em;
 }
 .keypad-spacebar {
 	width: 13.25em;
@@ -91,7 +92,7 @@ img.keypad-trigger {
 }
 .keypad-clear, .keypad-back, .keypad-close, .keypad-shift {
 	color: #fff;
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 .keypad-clear {
 	background-color: #a00;

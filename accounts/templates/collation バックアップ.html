@@ -3,7 +3,7 @@
 
 {% block title %}納品確認{% endblock title %}
 {% block content %}
-
+    <h1>納品確認</h1>
     <!-- 2019/12/4 -->
     <!-- <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -20,17 +20,11 @@
     </form> -->
     <!-- <label class="operator-label">納品者:</label>
     <input class="inpt" type="text" id="text2" name="text" size="20" ><br> -->
-    <!-- <div class="collation">
-        <div class="collation_sub"> -->
-    <h1>納品確認</h1>
     <label >連番</label>
     <input type="text" class="serial_num" id="serial_num" name="serial_num" onchange="GetValue()">
     &emsp;
     <label>納品本数</label>
     <input type="text" class="serial_num" id="count_num" name="count_num" value="0" readonly><br>
-        <!-- </div>
-    </div> -->
-
     <table id="table1" border="1" align="center"><br>
         <!-- <br> -->
         <tr>
@@ -38,7 +32,6 @@
             <!-- <th>出荷実績</th> -->
             <th>納品時間</th>
             <!-- <th>納品者</th> -->
-            <th>削除</th>
         </tr>
     </table>
     <br>
@@ -60,6 +53,7 @@
     <audio src="{% static 'bgm/ng.mp3' %}" id="ng" type="audio/mp3"></audio> -->
 
     <!-- ■ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
     <script type = "text/javascript" > 
     /******************************************************
     * 適宜必要があれば"javascriptの奴ら"フォルダから持ってくる
@@ -116,13 +110,10 @@
         var serial_num = document.getElementById('serial_num').value;       //連番
         // var getname = document.getElementById('text2').value;      //操作者
         var table       = document.getElementById('table1');  //表のオブジェクトを取得
-        console.log(table)
-        console.log(table.rows.length)
-        // var cells       = new Array();
-        var row         = table.insertRow(1);       // 行を一行目に追加
+        var cells       = new Array();
+        var row         = table.insertRow(-1);      // 行を行末に追加
         var cell1       = row.insertCell(-1);       // td分追加
         var cell2       = row.insertCell(-1);
-        var cell3       = row.insertCell(-1);
         var now         = new Date();
         var Year        = now.getFullYear();
         var Month       = toDoubleDigits(now.getMonth()+1);
@@ -130,13 +121,19 @@
         var Hour        = toDoubleDigits(now.getHours());
         var Min         = toDoubleDigits(now.getMinutes());
         var check       = 0;                                    //okかngか判断する用
+        var a           = table.rows.length;
+        console.log(a);
+        document.getElementById('count_num').value = a - 1;
         // var Sec         = toDoubleDigits(now.getSeconds());
         cell1.innerHTML = serial_num;   //納品杭の連番
         cell2.innerHTML = nowtime_table();
-        cell3.innerHTML = '<button class="rowdel" id="'+cell1.innerHTML+'" value="'+cell1.innerHTML+'" onclick="rowdel(id)">Del</button>';
-        var cells       = CellsGet(table);
+        // cell2.innerHTML = Year + "/" + Month + "/" + date + "/" + Hour + ":" + Min + ":" + Sec; //日時
+        for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){
+            //i行目の0列目のセルの値を取得(納品杭)
+            cells.push(table.rows[i].cells[0].innerHTML);
+        }
+        // console.log(cells);
         var serial_num = cells[cells.length - 1]
-        // console.log(cells)
         for(var base = 0; base < cells.length - 1; base++){
             //入力値を基準としそれが既に入力されているか比較する/既に読込まれているとき
             if(serial_num == cells[base]){
@@ -144,7 +141,10 @@
                 table.deleteRow(row_num - 1);
                 var sound = new Howl({ src: ['/static/bgm/ng.mp3'] })
                 sound.play()
+                // var sounds = document.getElementById('ng');
+                // sounds.play();
                 alert('既に読み込まれています');
+                // console.log(table);
                 check = 1;
             }
         }
@@ -157,38 +157,10 @@
         }
         document.getElementById('serial_num').value = "";
         document.getElementById('serial_num').focus();
-        document.getElementById('count_num').value = table.rows.length - 1;
-    }
-    /********************************
-    * cellの値格納
-    **********************************/
-    function CellsGet(table){
-        var cells = new Array();
-        for(var i = 1,rowlen = table.rows.length; i < rowlen; i++){
-            //i行目の0列目のセルの値を取得(納品杭)
-            cells.push(table.rows[i].cells[0].innerHTML);
-        }
-        return cells;
-    }
-    /********************************
-    * 行削除
-    **********************************/
-    function rowdel(id){
-        var table      = document.getElementById('table1');  //表のオブジェクトを取得
-        var cells      = CellsGet(table);
-        var serial_num = document.getElementById(id).value;  //Delする列の連番を取得
-        //Delする行の連番と納品杭の連番が格納されているcell(上から配列に格納)を見て比較し、一致したときにその連番の行indexを取得
-        for(var base = 0; base < cells.length ; base++){
-            if(serial_num == cells[base]){
-                var serial_row_num = base + 1;
-            }
-        }
-        table.deleteRow(serial_row_num);
-        document.getElementById('count_num').value = table.rows.length - 1;
     }
     /********************************
         * csvダウンロード
-    **********************************/
+        **********************************/
     function handleDownload() {
         var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
         var table = document.getElementById('table1');//id=table1という要素を取得

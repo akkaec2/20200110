@@ -3,8 +3,7 @@
 {% block title %}進捗管理{% endblock title %}
 {% block content %}
 <h1>進捗管理</h1>
-<br> <br>
-                
+              
     <!-- Pythonでできることを確かめるためにいったん保留 -->
     <!-- *********************************************************************
     * 現場で使用してもらう用で作成(2020/1/9~) ← サーバーやＤＢサーバーが立つまで
@@ -55,6 +54,15 @@
     /******************************************************
     * 適宜必要があれば"javascriptの奴ら"フォルダから持ってくる
     *******************************************************/
+    /*************************
+    * テンキーの出力(sample.js)
+    **************************/
+    $(function(){
+	    $("#pail_num").keypad();
+    })
+    $(function(){
+	    $("#serial_num").keypad();
+    })
 
     /**********************
     * csvname時間の出力
@@ -122,8 +130,11 @@
             }
             for(var j = 0; j < rowArr.length - 1 ; j++){
                 rows.push(table.insertRow(-1));
-                //列は見出しの数※今回は6個 "修正時刻","修正者"を加えるため
-                for(var k = 0; k < 6; k ++){　//k < data[0].length
+                /******************************************
+                //材料検査に応じて変更
+                ******************************************/
+                //列は見出しの数※※材料検査有は7、無は6 "修正時刻","修正者"を加えるため
+                for(var k = 0; k < 7; k ++){　//k < data[0].length
                     cell = rows[j].insertCell(-1);
                     if(!(data[j][k])){
                         cell.innerHTML = "";
@@ -164,6 +175,9 @@
             }
             else{
                 //初めての読取りの場合(時間が入力されていなければ)
+                /******************************************
+                //材料検査無の時
+                ******************************************/
                 if(!(table.rows[pailnum_position + 1].cells[4].innerHTML)){
                     table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num
                     table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section
@@ -173,12 +187,25 @@
                     document.getElementById('cross_section').value = "";
                     document.getElementById('serial_num').focus();
                 }
+                //材料検査ありのとき
+                // if(!(table.rows[pailnum_position + 1].cells[5].innerHTML)){
+                //     table.rows[pailnum_position + 1].cells[3].innerHTML = pail_num
+                //     table.rows[pailnum_position + 1].cells[4].innerHTML = cross_section
+                //     table.rows[pailnum_position + 1].cells[5].innerHTML = nowtime_table();
+                //     console.log(pailnum_position)
+                //     document.getElementById('serial_num').value = "";
+                //     document.getElementById('cross_section').value = "";
+                //     document.getElementById('serial_num').focus();
+                // }
                 //二度目の読取りの場合
                 else{
                     // alert('既に読み込まれています');
                     var result = window.confirm('「' + serial_num + '」' + 'は既に読み込まれています.\n入力済みの内容を上書きしますか.')
                     //修正する場合
                     if(result){
+                        /******************************************
+                        //材料検査無の時
+                        ******************************************/
                         var save_pail_num      = table.rows[pailnum_position + 1].cells[2].innerHTML;
                         var save_cross_section = table.rows[pailnum_position + 1].cells[3].innerHTML;
                         var save_start_casting = table.rows[pailnum_position + 1].cells[4].innerHTML;
@@ -194,7 +221,22 @@
                             table.rows[pailnum_position + 1].cells[5].innerHTML = nowtime_table();
                             table.rows[pailnum_position + 1].cells[3].style.color = "red";
                         }
-
+                        //材料検査ありのとき
+                        // var save_pail_num      = table.rows[pailnum_position + 1].cells[3].innerHTML;
+                        // var save_cross_section = table.rows[pailnum_position + 1].cells[4].innerHTML;
+                        // var save_start_casting = table.rows[pailnum_position + 1].cells[5].innerHTML;
+                        // if(save_pail_num != pail_num){
+                        //     table.rows[pailnum_position + 1].cells[3].innerHTML = save_pail_num + '→' + pail_num;
+                        //     table.rows[pailnum_position + 1].cells[4].innerHTML = cross_section;
+                        //     table.rows[pailnum_position + 1].cells[6].innerHTML = nowtime_table();
+                        //     table.rows[pailnum_position + 1].cells[3].style.color = "red";
+                        // }
+                        // if(save_cross_section != cross_section){
+                        //     table.rows[pailnum_position + 1].cells[3].innerHTML = pail_num;
+                        //     table.rows[pailnum_position + 1].cells[4].innerHTML = save_cross_section + '→' + cross_section;
+                        //     table.rows[pailnum_position + 1].cells[6].innerHTML = nowtime_table();
+                        //     table.rows[pailnum_position + 1].cells[34].style.color = "red";
+                        // }
                         // table.rows[pailnum_position + 1].cells[2].innerHTML = pail_num;
                         // table.rows[pailnum_position + 1].cells[3].innerHTML = cross_section;
                         // table.rows[pailnum_position + 1].cells[4].innerHTML = nowtime();
@@ -250,6 +292,9 @@
     /********************************
     一番上に見出しを付けて次に値の出力
     ********************************/
+        /******************************************
+        //材料検査無の時
+        ******************************************/
         for(var i=1; i < table.rows.length; i++){
             data_csv_end += table.rows[i].cells[0].innerHTML; //納品杭
             data_csv_end += ",";//セル値の区切り文字として,を追加
@@ -264,6 +309,24 @@
             data_csv_end += table.rows[i].cells[5].innerHTML; //修正時刻
             data_csv_end += "\n";//行終わりに改行コードを追加
         }
+        //材料検査ありの時
+        for(var i=1; i < table.rows.length; i++){
+            data_csv_end += table.rows[i].cells[0].innerHTML; //納品杭
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[1].innerHTML; //納品時間
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[3].innerHTML; //材料検査
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[4].innerHTML; //杭番号
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[5].innerHTML; //断面
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[6].innerHTML; //打設時刻
+            data_csv_end += ",";//セル値の区切り文字として,を追加
+            data_csv_end += table.rows[i].cells[7].innerHTML; //修正時刻
+            data_csv_end += "\n";//行終わりに改行コードを追加
+        }
+
     //*******************************
         var blob_end = new Blob([ bom_end, data_csv_end], { "type" : "text/csv" });//data_csvのデータをcsvとしてダウンロードする関数
 
